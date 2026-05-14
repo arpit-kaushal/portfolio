@@ -1,0 +1,259 @@
+.page {
+  display: grid;
+  gap: 52px;
+  grid-template-columns: 1fr;
+  isolation: isolate;
+  min-height: 100vh;
+  padding: 136px 210px 64px 0;
+  position: relative;
+}
+
+.intro {
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  color: var(--accentTwo);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(2.4rem, 5vw, 5rem);
+  font-weight: 950;
+  letter-spacing: -0.065em;
+  line-height: 1;
+  margin: 0 0 22px;
+}
+
+.copy {
+  color: var(--muted);
+  font-size: 1.06rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.followLinks {
+  align-content: center;
+  align-self: center;
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  min-height: 100%;
+}
+
+.followLinks a {
+  align-items: center;
+  animation: socialPulse 3s ease-in-out infinite;
+  color: var(--muted);
+  display: inline-flex;
+  font-size: 1.08rem;
+  font-weight: 900;
+  gap: 8px;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.followLinks a:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.followLinks a:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.followLinks a:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.followLinks a:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.followLinks a:hover {
+  color: var(--accentTwo);
+  transform: translateX(6px);
+}
+
+.contactGrid {
+  align-items: start;
+  display: grid;
+  gap: 52px;
+  grid-template-columns: 0.68fr 1.32fr;
+  position: relative;
+  z-index: 1;
+}
+
+.form {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+}
+
+.form input,
+.form textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--text);
+  outline: none;
+  padding: 16px 18px;
+}
+
+.form textarea {
+  min-height: 170px;
+  resize: vertical;
+}
+
+.form button {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.64), rgba(255, 255, 255, 0.22));
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 10px;
+  justify-content: center;
+  justify-self: center;
+  padding: 10px 14px;
+}
+
+.light .form button {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.32), rgba(255, 255, 255, 0.58));
+  color: #111827;
+}
+
+.form button:hover {
+  color: #facc15;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 2px 0 0;
+}
+
+@keyframes socialPulse {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.03);
+  }
+}
+
+.floatingIcons {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+.floatingIcon {
+  align-items: center;
+  animation-duration: 18s;
+  animation-delay: var(--delay);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  color: color-mix(in srgb, var(--muted) 55%, var(--accentTwo) 45%);
+  display: inline-flex;
+  filter: brightness(1.18) saturate(1.05);
+  justify-content: center;
+  left: var(--left);
+  opacity: 0.18;
+  position: absolute;
+  top: var(--top);
+  transform:
+    translate(calc(-50% + var(--repel-x)), calc(-50% + var(--repel-y)))
+    rotate(var(--rotate, -6deg));
+  transition:
+    opacity 220ms ease,
+    transform 260ms ease;
+}
+
+.floatingIcon:nth-child(3n) {
+  opacity: 0.14;
+}
+
+.floatingIcon:nth-child(4n) {
+  opacity: 0.2;
+}
+
+.floatIconA {
+  animation-name: floatIconA;
+}
+
+.floatIconB {
+  animation-name: floatIconB;
+}
+
+.floatIconC {
+  animation-name: floatIconC;
+}
+
+@keyframes floatIconA {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    --rotate: -7deg;
+  }
+
+  50% {
+    margin-left: 46px;
+    margin-top: -34px;
+    --rotate: 6deg;
+  }
+}
+
+@keyframes floatIconB {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    --rotate: 8deg;
+  }
+
+  50% {
+    margin-left: -40px;
+    margin-top: 42px;
+    --rotate: -5deg;
+  }
+}
+
+@keyframes floatIconC {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    --rotate: -3deg;
+  }
+
+  50% {
+    margin-left: 34px;
+    margin-top: 38px;
+    --rotate: 9deg;
+  }
+}
+
+@media (max-width: 980px) {
+  .page,
+  .contactGrid {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+  }
+}
