@@ -1,7 +1,14 @@
 "use client";
 
-import { useState, type CSSProperties, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
+import { Moon, Sun } from "lucide-react";
 import styles from "./SiteShell.module.css";
 import { SocialDock } from "./SocialDock";
 
@@ -16,22 +23,47 @@ const links = [
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
+  const shellRef = useRef<HTMLElement | null>(null);
+  const frameRef = useRef<number | null>(null);
 
   const style = {
-    "--mx": `${cursor.x * 26}px`,
-    "--my": `${cursor.y * 26}px`,
-    "--tilt": `${cursor.x * 10}deg`,
+    "--mx": "0px",
+    "--my": "0px",
+    "--tilt": "0deg",
   } as CSSProperties;
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
 
   return (
     <main
+      ref={shellRef}
       className={`${styles.shell} ${theme === "light" ? styles.light : ""}`}
       style={style}
       onMouseMove={(event) => {
-        setCursor({
-          x: event.clientX / window.innerWidth - 0.5,
-          y: event.clientY / window.innerHeight - 0.5,
+        const x = event.clientX / window.innerWidth - 0.5;
+        const y = event.clientY / window.innerHeight - 0.5;
+
+        if (frameRef.current !== null) {
+          cancelAnimationFrame(frameRef.current);
+        }
+
+        frameRef.current = requestAnimationFrame(() => {
+          const shell = shellRef.current;
+          if (!shell) {
+            frameRef.current = null;
+            return;
+          }
+
+          shell.style.setProperty("--mx", `${x * 26}px`);
+          shell.style.setProperty("--my", `${y * 26}px`);
+          shell.style.setProperty("--tilt", `${x * 10}deg`);
+          frameRef.current = null;
         });
       }}
     >
@@ -48,7 +80,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           aria-label="Toggle color theme"
         >
-          <span aria-hidden="true">{theme === "dark" ? "☀" : "☾"}</span>
+          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
         </button>
       </header>
 

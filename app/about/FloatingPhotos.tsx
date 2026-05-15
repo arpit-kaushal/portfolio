@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import styles from "./page.module.css";
 
 const photos = [
@@ -34,10 +34,20 @@ const placements = [
 export function FloatingPhotos() {
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
     function handlePointerMove(event: PointerEvent) {
-      setCursor({ x: event.clientX, y: event.clientY });
+      const nextCursor = { x: event.clientX, y: event.clientY };
+
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
+
+      frameRef.current = requestAnimationFrame(() => {
+        setCursor(nextCursor);
+        frameRef.current = null;
+      });
     }
 
     function handleResize() {
@@ -50,6 +60,9 @@ export function FloatingPhotos() {
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("resize", handleResize);
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
     };
   }, []);
 

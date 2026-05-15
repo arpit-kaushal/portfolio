@@ -4,7 +4,7 @@
   "description": "Modern portfolio website built with Next.js, React, TypeScript, and Node.js.",
   "main": "next.config.mjs",
   "scripts": {
-    "dev": "next dev -H 0.0.0.0",
+    "dev": "next dev --webpack -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit"

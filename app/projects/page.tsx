@@ -60,20 +60,6 @@ export default function ProjectsPage() {
           </article>
         ))}
       </div>
-
-      <div className={styles.walker} aria-hidden="true">
-        <div className={styles.walkerHead}>
-          <span className={styles.walkerHair} />
-          <span className={styles.walkerEye} />
-          <span className={styles.walkerSmile} />
-        </div>
-        <div className={styles.walkerBody}>
-          <span className={styles.walkerArm} />
-          <span className={styles.book} />
-        </div>
-        <span className={styles.legOne} />
-        <span className={styles.legTwo} />
-      </div>
     </section>
   );
 }
