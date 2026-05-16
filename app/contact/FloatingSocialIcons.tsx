@@ -42,11 +42,14 @@ const placements: IconEntry[] = [
 ];
 
 export function FloatingSocialIcons() {
+  const [mounted, setMounted] = useState(false);
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
+    setMounted(true);
+
     function handlePointerMove(event: PointerEvent) {
       const nextCursor = { x: event.clientX, y: event.clientY };
 
@@ -105,6 +108,10 @@ export function FloatingSocialIcons() {
       }),
     [cursor, viewport],
   );
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className={styles.floatingIcons} aria-hidden="true">
