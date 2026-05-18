@@ -1,6 +1,7 @@
 .page {
   min-height: 100vh;
-  padding: 136px 130px 64px 0;
+  padding: 136px clamp(190px, 18vw, 260px) 64px 0;
+  position: relative;
 }
 
 .eyebrow {
@@ -13,18 +14,81 @@
 }
 
 .title {
-  font-size: clamp(2.4rem, 5vw, 5rem);
-  font-weight: 950;
-  letter-spacing: -0.065em;
-  line-height: 1;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3.75rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.12;
   margin: 0 0 34px;
   max-width: 760px;
+  position: relative;
+  z-index: 1;
 }
 
 .grid {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  position: relative;
+  z-index: 1;
+}
+
+.floatingProjectIcons {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+.floatingProjectIcon {
+  align-items: center;
+  animation-duration: 18s;
+  animation-delay: var(--delay);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  color: color-mix(in srgb, var(--muted) 52%, var(--accentTwo) 48%);
+  display: inline-flex;
+  filter: brightness(1.18) saturate(1.05);
+  height: var(--size);
+  justify-content: center;
+  left: var(--left);
+  opacity: 0.28;
+  position: absolute;
+  top: var(--top);
+  transform:
+    translate(calc(-50% + var(--repel-x)), calc(-50% + var(--repel-y)))
+    rotate(var(--rotate, -6deg));
+  transition:
+    opacity 220ms ease,
+    transform 260ms ease;
+  will-change: transform;
+  width: var(--size);
+}
+
+.floatingProjectIcon:nth-child(3n) {
+  opacity: 0.22;
+}
+
+.floatingProjectIcon:nth-child(4n) {
+  opacity: 0.34;
+}
+
+.floatingProjectIcon:nth-child(5n) {
+  color: color-mix(in srgb, var(--accentThree) 58%, var(--muted) 42%);
+}
+
+.floatProjectIconA {
+  animation-name: floatProjectIconA;
+}
+
+.floatProjectIconB {
+  animation-name: floatProjectIconB;
+}
+
+.floatProjectIconC {
+  animation-name: floatProjectIconC;
 }
 
 .card {
@@ -62,72 +126,31 @@
 }
 
 .imageWrap {
+  aspect-ratio: 16 / 8;
   border-radius: 14px;
+  background: var(--panelStrong);
   overflow: hidden;
   position: relative;
 }
 
 .imageWrap::after {
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.24) 100%);
   content: "";
   inset: 0;
   opacity: 0.5;
   position: absolute;
 }
 
-.art {
-  align-items: center;
-  aspect-ratio: 16 / 8;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 42%),
-    repeating-linear-gradient(135deg, transparent 0 18px, rgba(255, 255, 255, 0.16) 18px 19px),
-    linear-gradient(135deg, var(--accent), var(--accentTwo), var(--accentThree)),
-    var(--panelStrong);
-  border-radius: 14px;
-  color: rgba(255, 255, 255, 0.92);
-  display: grid;
-  font-size: 3.6rem;
-  font-weight: 950;
-  letter-spacing: -0.08em;
-  place-items: center;
-  position: relative;
-  transition: transform 320ms ease;
-}
-
-.art::before,
-.art::after {
-  border: 1px solid rgba(255, 255, 255, 0.36);
-  border-radius: 14px;
-  content: "";
-  position: absolute;
-}
-
-.art::before {
-  inset: 28px;
-}
-
-.art::after {
-  inset: 62px;
-  transform: rotate(18deg);
-}
-
-.art span {
-  position: relative;
-  z-index: 1;
-}
-
-.card:hover .art {
-  transform: scale(1.08);
-}
-
-.tag {
-  color: var(--accentTwo);
+.projectImage {
   display: block;
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  margin-bottom: 10px;
-  text-transform: uppercase;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 320ms ease;
+  width: 100%;
+}
+
+.card:hover .projectImage {
+  transform: scale(1.08);
 }
 
 .cardHeader {
@@ -198,6 +221,51 @@
 
 .links a:hover {
   color: #a855f7;
+}
+
+@keyframes floatProjectIconA {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    --rotate: -7deg;
+  }
+
+  50% {
+    margin-left: 46px;
+    margin-top: -34px;
+    --rotate: 6deg;
+  }
+}
+
+@keyframes floatProjectIconB {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    --rotate: 8deg;
+  }
+
+  50% {
+    margin-left: -40px;
+    margin-top: 42px;
+    --rotate: -5deg;
+  }
+}
+
+@keyframes floatProjectIconC {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+    --rotate: -3deg;
+  }
+
+  50% {
+    margin-left: 34px;
+    margin-top: 38px;
+    --rotate: 9deg;
+  }
 }
 
 @media (max-width: 1100px) {

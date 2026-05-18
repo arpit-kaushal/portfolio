@@ -7,28 +7,22 @@ import {
   LinkedInIcon,
   XIcon,
 } from "../../components/SocialIcons";
-import { AboutMascot } from "./AboutMascot";
 import { FloatingPhotos } from "./FloatingPhotos";
 
 const experiences = [
   {
-    company: "TechNova Solutions",
-    logo: "TN",
-    role: "Frontend Developer",
-    duration: "Jan 2024 - Present",
+    company: "Kohli Media LLP",
+    logo: "/logo/kohli.jpg",
+    role: "Web Developer",
+    duration: "April 2025 - July 2025",
   },
   {
-    company: "PixelCraft Studio",
-    logo: "PC",
-    role: "UI Developer",
-    duration: "Jun 2023 - Dec 2023",
+    company: "TechnoHacks Solutions Pvt. Ltd.",
+    logo: "/logo/techno.png",
+    role: "Python Developer",
+    duration: "May 2024 - Jume 2024",
   },
-  {
-    company: "CodeWave Labs",
-    logo: "CW",
-    role: "Web Developer Intern",
-    duration: "Jan 2023 - May 2023",
-  },
+
 ];
 
 const socials = [
@@ -45,7 +39,6 @@ export default function AboutPage() {
   return (
     <section className={styles.page}>
       <FloatingPhotos />
-      <AboutMascot />
       <section className={styles.descriptionSection}>
         <div className={styles.description}>
           
@@ -81,8 +74,8 @@ export default function AboutPage() {
             {experiences.map((experience) => (
               <article className={styles.workCard} key={experience.company}>
                 <div className={styles.workInfo}>
-                  <span className={styles.companyLogo} aria-hidden="true">
-                    {experience.logo}
+                  <span className={styles.companyLogo}>
+                    <img src={experience.logo} alt={`${experience.company} logo`} />
                   </span>
                   <div>
                     <h3>

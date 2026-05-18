@@ -2,46 +2,51 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import {
-  FacebookIcon,
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  XIcon,
-} from "../../components/SocialIcons";
+  Cpu,
+  Headphones,
+  Keyboard,
+  Laptop,
+  Lightbulb,
+  Monitor,
+  Mouse,
+  PlugZap,
+  Smartphone,
+  Speaker,
+  Usb,
+  type LucideIcon,
+} from "lucide-react";
 import styles from "./page.module.css";
 
-type IconEntry = {
-  Icon: typeof XIcon;
+type ProjectIconEntry = {
+  Icon: LucideIcon;
   left: number;
   top: number;
   size: number;
-  drift: "floatIconA" | "floatIconB" | "floatIconC";
+  drift: "floatProjectIconA" | "floatProjectIconB" | "floatProjectIconC";
   delay: string;
 };
 
-const iconCycle = [XIcon, LinkedInIcon, GitHubIcon, InstagramIcon, FacebookIcon] as const;
-
-const placements: IconEntry[] = [
-  { Icon: iconCycle[0], left: 7, top: 12, size: 44, drift: "floatIconA", delay: "-1s" },
-  { Icon: iconCycle[1], left: 22, top: 8, size: 38, drift: "floatIconB", delay: "-4s" },
-  { Icon: iconCycle[2], left: 48, top: 11, size: 42, drift: "floatIconC", delay: "-2s" },
-  { Icon: iconCycle[3], left: 72, top: 18, size: 40, drift: "floatIconA", delay: "-7s" },
-  { Icon: iconCycle[4], left: 88, top: 14, size: 36, drift: "floatIconB", delay: "-9s" },
-  { Icon: iconCycle[0], left: 12, top: 38, size: 40, drift: "floatIconC", delay: "-5s" },
-  { Icon: iconCycle[1], left: 38, top: 34, size: 46, drift: "floatIconA", delay: "-3s" },
-  { Icon: iconCycle[2], left: 62, top: 40, size: 38, drift: "floatIconB", delay: "-8s" },
-  { Icon: iconCycle[3], left: 82, top: 36, size: 44, drift: "floatIconC", delay: "-11s" },
-  { Icon: iconCycle[4], left: 5, top: 58, size: 42, drift: "floatIconA", delay: "-6s" },
-  { Icon: iconCycle[0], left: 28, top: 62, size: 36, drift: "floatIconB", delay: "-10s" },
-  { Icon: iconCycle[1], left: 52, top: 56, size: 40, drift: "floatIconC", delay: "-12s" },
-  { Icon: iconCycle[2], left: 76, top: 64, size: 38, drift: "floatIconA", delay: "-4s" },
-  { Icon: iconCycle[3], left: 18, top: 82, size: 44, drift: "floatIconB", delay: "-13s" },
-  { Icon: iconCycle[4], left: 44, top: 78, size: 40, drift: "floatIconC", delay: "-2s" },
-  { Icon: iconCycle[0], left: 68, top: 84, size: 36, drift: "floatIconA", delay: "-14s" },
-  { Icon: iconCycle[1], left: 92, top: 76, size: 42, drift: "floatIconB", delay: "-15s" },
+const placements: ProjectIconEntry[] = [
+  { Icon: Lightbulb, left: 8, top: 12, size: 52, drift: "floatProjectIconA", delay: "-1s" },
+  { Icon: Monitor, left: 26, top: 8, size: 50, drift: "floatProjectIconB", delay: "-4s" },
+  { Icon: Laptop, left: 51, top: 12, size: 58, drift: "floatProjectIconC", delay: "-2s" },
+  { Icon: Mouse, left: 73, top: 19, size: 42, drift: "floatProjectIconA", delay: "-7s" },
+  { Icon: Cpu, left: 88, top: 13, size: 48, drift: "floatProjectIconB", delay: "-9s" },
+  { Icon: Usb, left: 12, top: 36, size: 44, drift: "floatProjectIconC", delay: "-5s" },
+  { Icon: Smartphone, left: 36, top: 34, size: 52, drift: "floatProjectIconA", delay: "-3s" },
+  { Icon: PlugZap, left: 62, top: 39, size: 46, drift: "floatProjectIconB", delay: "-8s" },
+  { Icon: Headphones, left: 82, top: 37, size: 54, drift: "floatProjectIconC", delay: "-11s" },
+  { Icon: Speaker, left: 6, top: 59, size: 46, drift: "floatProjectIconA", delay: "-6s" },
+  { Icon: Keyboard, left: 30, top: 63, size: 58, drift: "floatProjectIconB", delay: "-10s" },
+  { Icon: Lightbulb, left: 54, top: 56, size: 42, drift: "floatProjectIconC", delay: "-12s" },
+  { Icon: Cpu, left: 76, top: 65, size: 44, drift: "floatProjectIconA", delay: "-4s" },
+  { Icon: Laptop, left: 17, top: 82, size: 56, drift: "floatProjectIconB", delay: "-13s" },
+  { Icon: Mouse, left: 44, top: 78, size: 40, drift: "floatProjectIconC", delay: "-2s" },
+  { Icon: Usb, left: 67, top: 84, size: 42, drift: "floatProjectIconA", delay: "-14s" },
+  { Icon: Headphones, left: 91, top: 77, size: 50, drift: "floatProjectIconB", delay: "-15s" },
 ];
 
-export function FloatingSocialIcons() {
+export function FloatingProjectIcons() {
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const frameRef = useRef<number | null>(null);
@@ -97,8 +102,8 @@ export function FloatingSocialIcons() {
 
         return {
           Icon: placement.Icon,
-          iconSize: placement.size,
           key: `${index}-${placement.left}-${placement.top}`,
+          className: `${styles.floatingProjectIcon} ${styles[placement.drift]}`,
           style: {
             "--left": `${placement.left}%`,
             "--top": `${placement.top}%`,
@@ -107,17 +112,17 @@ export function FloatingSocialIcons() {
             "--repel-y": `${repelY}px`,
             "--delay": placement.delay,
           } as CSSProperties,
-          driftClass: styles[placement.drift],
+          size: placement.size,
         };
       }),
     [cursor, viewport],
   );
 
   return (
-    <div className={styles.floatingIcons} aria-hidden="true">
-      {items.map(({ Icon, iconSize, key, style, driftClass }) => (
-        <span key={key} className={`${styles.floatingIcon} ${driftClass}`} style={style}>
-          <Icon size={iconSize} />
+    <div className={styles.floatingProjectIcons} aria-hidden="true">
+      {items.map(({ Icon, key, className, style, size }) => (
+        <span key={key} className={className} style={style}>
+          <Icon size={size} />
         </span>
       ))}
     </div>

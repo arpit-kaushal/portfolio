@@ -32,19 +32,16 @@ const placements = [
 ];
 
 export function FloatingPhotos() {
-  const [mounted, setMounted] = useState(false);
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-
     function handlePointerMove(event: PointerEvent) {
       const nextCursor = { x: event.clientX, y: event.clientY };
 
       if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current);
+        return;
       }
 
       frameRef.current = requestAnimationFrame(() => {
@@ -53,15 +50,21 @@ export function FloatingPhotos() {
       });
     }
 
+    function handlePointerLeave() {
+      setCursor({ x: -9999, y: -9999 });
+    }
+
     function handleResize() {
       setViewport({ width: window.innerWidth, height: window.innerHeight });
     }
 
     handleResize();
     window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerleave", handlePointerLeave);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
       window.removeEventListener("resize", handleResize);
       if (frameRef.current !== null) {
         cancelAnimationFrame(frameRef.current);
@@ -78,9 +81,10 @@ export function FloatingPhotos() {
         const dx = x - cursor.x;
         const dy = y - cursor.y;
         const distance = Math.hypot(dx, dy);
-        const strength = Math.max(0, 1 - distance / 220);
-        const repelX = strength ? (dx / Math.max(distance, 1)) * 90 * strength : 0;
-        const repelY = strength ? (dy / Math.max(distance, 1)) * 90 * strength : 0;
+        const strength = Math.max(0, 1 - distance / 320);
+        const safeDistance = Math.max(distance, 1);
+        const repelX = strength ? (dx / safeDistance) * 180 * strength : 0;
+        const repelY = strength ? (dy / safeDistance) * 180 * strength : 0;
 
         return {
           src,
@@ -97,10 +101,6 @@ export function FloatingPhotos() {
       }),
     [cursor, viewport],
   );
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <div className={styles.floatingPhotos} aria-hidden="true">

@@ -1,45 +1,10 @@
 .shell {
-  --bg: #070b18;
-  --panel: rgba(13, 20, 38, 0.76);
-  --panelStrong: rgba(24, 34, 58, 0.9);
-  --text: #f8fbff;
-  --muted: #aeb9cc;
-  --line: rgba(255, 255, 255, 0.13);
-  --lineStrong: rgba(148, 163, 184, 0.38);
-  --accent: #9b87f5;
-  --accentTwo: #38bdf8;
-  --accentThree: #d6b36a;
-  background:
-    radial-gradient(circle at 16% 16%, rgba(155, 135, 245, 0.16), transparent 32%),
-    radial-gradient(circle at 84% 22%, rgba(56, 189, 248, 0.13), transparent 34%),
-    radial-gradient(circle at 54% 90%, rgba(214, 179, 106, 0.1), transparent 38%),
-    linear-gradient(135deg, #070b18 0%, #101827 52%, #07111d 100%);
   color: var(--text);
   isolation: isolate;
   min-height: 100vh;
   overflow: hidden;
   padding: 34px min(8vw, 96px) 72px;
   position: relative;
-}
-
-.light {
-  --bg: #d9e9ff;
-  --panel: rgba(226, 235, 246, 0.86);
-  --panelStrong: rgba(203, 216, 232, 0.96);
-  --text: #0f1f35;
-  --muted: #47566a;
-  --line: rgba(15, 31, 53, 0.14);
-  --lineStrong: rgba(24, 63, 105, 0.28);
-  --accent: #3347a8;
-  --accentTwo: #087f8c;
-  --accentThree: #a46a22;
-  background:
-    radial-gradient(circle at 12% 16%, rgba(99, 102, 241, 0.34), transparent 30%),
-    radial-gradient(circle at 82% 16%, rgba(20, 184, 166, 0.3), transparent 32%),
-    radial-gradient(circle at 22% 82%, rgba(236, 72, 153, 0.22), transparent 34%),
-    radial-gradient(circle at 72% 78%, rgba(245, 158, 11, 0.24), transparent 35%),
-    linear-gradient(135deg, #d9e9ff 0%, #d7f4ef 38%, #eee0ff 68%, #ffe8c7 100%);
-  color-scheme: light;
 }
 
 .background {
@@ -175,7 +140,7 @@
   position: fixed;
   right: min(8vw, 96px);
   top: 26px;
-  z-index: 20;
+  z-index: 30;
 }
 
 .brand,
@@ -209,7 +174,12 @@
   font-size: 1.4rem;
   height: 48px;
   place-items: center;
+  pointer-events: auto;
   padding: 0;
+  position: fixed;
+  right: min(8vw, 96px);
+  top: 26px;
+  z-index: 999;
   width: 48px;
 }
 
@@ -350,18 +320,6 @@
   opacity: 1;
 }
 
-.navDot {
-  background: currentColor;
-  border-radius: 999px;
-  height: 7px;
-  transition: transform 220ms ease;
-  width: 7px;
-}
-
-.navLink:hover .navDot {
-  transform: scale(1.45);
-}
-
 .content {
   position: relative;
   z-index: 1;
@@ -391,7 +349,7 @@
     position: fixed;
     right: 20px;
     top: auto;
-    z-index: 24;
+    z-index: 999;
   }
 
   .nav {
@@ -451,13 +409,6 @@
     transform: none;
   }
 
-  .navDot {
-    display: none;
-  }
-
-  .navLink:hover .navDot {
-    transform: none;
-  }
 }
 
 @keyframes wheelSpin {

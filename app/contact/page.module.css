@@ -2,7 +2,6 @@
   display: grid;
   gap: 52px;
   grid-template-columns: 1fr;
-  isolation: isolate;
   min-height: 100vh;
   padding: 136px 210px 64px 0;
   position: relative;
@@ -24,10 +23,12 @@
 }
 
 .title {
-  font-size: clamp(2.4rem, 5vw, 5rem);
-  font-weight: 950;
-  letter-spacing: -0.065em;
-  line-height: 1;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3.75rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.12;
   margin: 0 0 22px;
 }
 
@@ -160,7 +161,7 @@
   overflow: hidden;
   pointer-events: none;
   position: fixed;
-  z-index: 0;
+  z-index: -1;
 }
 
 .floatingIcon {
@@ -172,9 +173,10 @@
   color: color-mix(in srgb, var(--muted) 55%, var(--accentTwo) 45%);
   display: inline-flex;
   filter: brightness(1.18) saturate(1.05);
+  height: var(--size);
   justify-content: center;
   left: var(--left);
-  opacity: 0.18;
+  opacity: 0.3;
   position: absolute;
   top: var(--top);
   transform:
@@ -183,14 +185,16 @@
   transition:
     opacity 220ms ease,
     transform 260ms ease;
+  will-change: transform;
+  width: var(--size);
 }
 
 .floatingIcon:nth-child(3n) {
-  opacity: 0.14;
+  opacity: 0.24;
 }
 
 .floatingIcon:nth-child(4n) {
-  opacity: 0.2;
+  opacity: 0.34;
 }
 
 .floatIconA {
