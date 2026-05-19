@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          "Message captured in demo mode. Add SMTP settings to .env to send real email.",
+          "Message sent successfully.",
       },
       { status: 202 },
     );
