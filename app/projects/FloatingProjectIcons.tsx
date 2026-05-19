@@ -46,8 +46,29 @@ const placements: ProjectIconEntry[] = [
   { Icon: Headphones, left: 91, top: 77, size: 50, drift: "floatProjectIconB", delay: "-15s" },
 ];
 
+const mobilePlacements: ProjectIconEntry[] = [
+  { Icon: Lightbulb, left: 11, top: 12, size: 28, drift: "floatProjectIconA", delay: "-1s" },
+  { Icon: Monitor, left: 39, top: 9, size: 28, drift: "floatProjectIconB", delay: "-4s" },
+  { Icon: Laptop, left: 70, top: 13, size: 30, drift: "floatProjectIconC", delay: "-2s" },
+  { Icon: Mouse, left: 91, top: 24, size: 24, drift: "floatProjectIconA", delay: "-7s" },
+  { Icon: Cpu, left: 18, top: 30, size: 26, drift: "floatProjectIconB", delay: "-9s" },
+  { Icon: Usb, left: 50, top: 31, size: 24, drift: "floatProjectIconC", delay: "-5s" },
+  { Icon: Smartphone, left: 79, top: 39, size: 28, drift: "floatProjectIconA", delay: "-3s" },
+  { Icon: PlugZap, left: 9, top: 49, size: 25, drift: "floatProjectIconB", delay: "-8s" },
+  { Icon: Headphones, left: 38, top: 55, size: 29, drift: "floatProjectIconC", delay: "-11s" },
+  { Icon: Speaker, left: 68, top: 57, size: 25, drift: "floatProjectIconA", delay: "-6s" },
+  { Icon: Keyboard, left: 91, top: 65, size: 30, drift: "floatProjectIconB", delay: "-10s" },
+  { Icon: Lightbulb, left: 18, top: 73, size: 24, drift: "floatProjectIconC", delay: "-12s" },
+  { Icon: Cpu, left: 49, top: 78, size: 25, drift: "floatProjectIconA", delay: "-4s" },
+  { Icon: Laptop, left: 78, top: 82, size: 30, drift: "floatProjectIconB", delay: "-13s" },
+  { Icon: Mouse, left: 10, top: 91, size: 23, drift: "floatProjectIconC", delay: "-2s" },
+  { Icon: Usb, left: 60, top: 93, size: 24, drift: "floatProjectIconA", delay: "-14s" },
+  { Icon: Headphones, left: 92, top: 92, size: 27, drift: "floatProjectIconB", delay: "-15s" },
+];
+
 export function FloatingProjectIcons() {
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
+  const [isMobile, setIsMobile] = useState(false);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const frameRef = useRef<number | null>(null);
 
@@ -70,7 +91,9 @@ export function FloatingProjectIcons() {
     }
 
     function handleResize() {
-      setViewport({ width: window.innerWidth, height: window.innerHeight });
+      const width = window.innerWidth;
+      setViewport({ width, height: window.innerHeight });
+      setIsMobile(width <= 1100);
     }
 
     handleResize();
@@ -89,13 +112,13 @@ export function FloatingProjectIcons() {
 
   const items = useMemo(
     () =>
-      placements.map((placement, index) => {
+      (isMobile ? mobilePlacements : placements).map((placement, index) => {
         const x = (placement.left / 100) * viewport.width;
         const y = (placement.top / 100) * viewport.height;
         const dx = x - cursor.x;
         const dy = y - cursor.y;
         const distance = Math.hypot(dx, dy);
-        const strength = Math.max(0, 1 - distance / 300);
+        const strength = isMobile ? 0 : Math.max(0, 1 - distance / 300);
         const safeDistance = Math.max(distance, 1);
         const repelX = strength ? (dx / safeDistance) * 170 * strength : 0;
         const repelY = strength ? (dy / safeDistance) * 170 * strength : 0;
@@ -115,7 +138,7 @@ export function FloatingProjectIcons() {
           size: placement.size,
         };
       }),
-    [cursor, viewport],
+    [cursor, isMobile, viewport],
   );
 
   return (

@@ -276,4 +276,8 @@
   .grid {
     grid-template-columns: 1fr;
   }
+
+  .floatingProjectIcon {
+    animation-name: none;
+  }
 }
