@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  padding: 136px clamp(190px, 18vw, 260px) 64px 0;
+  padding: 92px clamp(190px, 18vw, 260px) 64px 0;
   position: relative;
 }
 

@@ -4,7 +4,7 @@
   gap: 40px;
   grid-template-columns: 1.3fr 0.7fr;
   min-height: 100vh;
-  padding: 118px 200px 64px 0;
+  padding: 84px 200px 64px 0;
 }
 
 .eyebrow {
@@ -178,7 +178,7 @@
 
 @media (max-width: 640px) {
   .page {
-    padding-top: 104px;
+    padding-top: 82px;
   }
 
   .title {
