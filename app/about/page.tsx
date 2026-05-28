@@ -7,7 +7,7 @@ import {
   LinkedInIcon,
   XIcon,
 } from "../../components/SocialIcons";
-import { FloatingPhotos } from "./FloatingPhotos";
+import { FloatingEmojis } from "./FloatingEmojis";
 
 const experiences = [
   {
@@ -38,7 +38,7 @@ const email = "imarpitkaushal@gmail.com";
 export default function AboutPage() {
   return (
     <section className={styles.page}>
-      <FloatingPhotos />
+      <FloatingEmojis />
       <section className={styles.descriptionSection}>
         <div className={styles.description}>
           

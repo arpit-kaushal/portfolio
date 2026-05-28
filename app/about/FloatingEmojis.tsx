@@ -3,19 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import styles from "./page.module.css";
 
-const photos = [
-  "/about-photo.png",
-  "/photo1.png",
-  "/photo2.png",
-  "/photo3.png",
-  "/photo4.png",
-  "/photo5.png",
-  "/about-float-1.png",
-  "/about-float-2.png",
-  "/about-float-3.png",
-  "/about-float-4.png",
-  "/about-float-5.png",
-];
+const emojis = ["💡", "🚀", "⚡", "🎯", "✨", "🧠", "🛠️", "📚", "🌟", "💻", "🔥"];
 
 const placements = [
   { left: 8, top: 16, size: 72, drift: "floatPhotoA", delay: "-1s" },
@@ -45,7 +33,7 @@ const mobilePlacements = [
   { left: 82, top: 84, size: 31, drift: "floatPhotoC", delay: "-12s" },
 ];
 
-export function FloatingPhotos() {
+export function FloatingEmojis() {
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [isMobile, setIsMobile] = useState(false);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
@@ -89,9 +77,9 @@ export function FloatingPhotos() {
     };
   }, []);
 
-  const photoStyles = useMemo(
+  const emojiStyles = useMemo(
     () =>
-      photos.map((src, index) => {
+      emojis.map((emoji, index) => {
         const placement = isMobile ? mobilePlacements[index] : placements[index];
         const x = (placement.left / 100) * viewport.width;
         const y = (placement.top / 100) * viewport.height;
@@ -104,7 +92,7 @@ export function FloatingPhotos() {
         const repelY = strength ? (dy / safeDistance) * 180 * strength : 0;
 
         return {
-          src,
+          emoji,
           style: {
             "--left": `${placement.left}%`,
             "--top": `${placement.top}%`,
@@ -120,15 +108,15 @@ export function FloatingPhotos() {
   );
 
   return (
-    <div className={styles.floatingPhotos} aria-hidden="true">
-      {photoStyles.map(({ src, style, driftClass }) => (
-        <img
-          key={src}
-          src={src}
-          alt=""
-          className={`${styles.floatingPhoto} ${driftClass}`}
+    <div className={styles.floatingEmojis} aria-hidden="true">
+      {emojiStyles.map(({ emoji, style, driftClass }, index) => (
+        <span
+          key={`${emoji}-${index}`}
+          className={`${styles.floatingEmoji} ${driftClass}`}
           style={style}
-        />
+        >
+          {emoji}
+        </span>
       ))}
     </div>
   );

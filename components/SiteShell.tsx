@@ -24,32 +24,36 @@ const links = [
 
 const themeStyles = {
   dark: {
-    "--bg": "#070812",
-    "--panel": "rgba(10, 18, 34, 0.78)",
-    "--panelStrong": "rgba(18, 32, 54, 0.93)",
+    "--bg": "#020204",
+    "--panel": "rgba(12, 12, 16, 0.78)",
+    "--panelStrong": "rgba(22, 22, 28, 0.94)",
     "--text": "#fff8ec",
     "--muted": "#aab8cc",
     "--line": "rgba(255, 248, 236, 0.14)",
     "--lineStrong": "rgba(125, 249, 225, 0.38)",
+    "--wheelLine": "rgba(255, 255, 255, 0.72)",
+    "--wheelGlow": "rgba(255, 255, 255, 0.18)",
     "--accent": "#ff4fd8",
     "--accentTwo": "#36f5c7",
     "--accentThree": "#ffd166",
     background:
-      "radial-gradient(circle at 12% 14%, rgba(255, 79, 216, 0.2), transparent 31%), radial-gradient(circle at 86% 18%, rgba(54, 245, 199, 0.16), transparent 34%), radial-gradient(circle at 50% 92%, rgba(255, 209, 102, 0.13), transparent 38%), linear-gradient(135deg, #070812 0%, #111b2f 44%, #071b22 72%, #13091c 100%)",
+      "radial-gradient(circle at 18% 18%, rgba(22, 163, 74, 0.11), transparent 28%), radial-gradient(circle at 78% 24%, rgba(34, 197, 94, 0.08), transparent 32%), radial-gradient(circle at 50% 88%, rgba(21, 128, 61, 0.1), transparent 36%), linear-gradient(135deg, #000000 0%, #010301 34%, #041006 64%, #000000 100%)",
   },
   light: {
-    "--bg": "#fff7ed",
-    "--panel": "rgba(255, 255, 255, 0.74)",
-    "--panelStrong": "rgba(255, 249, 238, 0.94)",
+    "--bg": "#ffffff",
+    "--panel": "rgba(255, 255, 255, 0.78)",
+    "--panelStrong": "rgba(255, 255, 255, 0.96)",
     "--text": "#182033",
     "--muted": "#5b6476",
     "--line": "rgba(24, 32, 51, 0.13)",
     "--lineStrong": "rgba(20, 184, 166, 0.34)",
+    "--wheelLine": "rgba(0, 0, 0, 0.68)",
+    "--wheelGlow": "rgba(0, 0, 0, 0.14)",
     "--accent": "#6d28d9",
     "--accentTwo": "#0f9f8e",
     "--accentThree": "#f97316",
     background:
-      "radial-gradient(circle at 10% 12%, rgba(109, 40, 217, 0.22), transparent 30%), radial-gradient(circle at 84% 14%, rgba(15, 159, 142, 0.28), transparent 32%), radial-gradient(circle at 18% 84%, rgba(249, 115, 22, 0.22), transparent 33%), radial-gradient(circle at 76% 78%, rgba(244, 63, 94, 0.18), transparent 35%), linear-gradient(135deg, #fff7ed 0%, #e7fff8 36%, #f4ecff 68%, #fff1d6 100%)",
+      "radial-gradient(circle at 16% 16%, rgba(250, 204, 21, 0.12), transparent 18%), radial-gradient(circle at 82% 18%, rgba(234, 179, 8, 0.08), transparent 21%), radial-gradient(circle at 48% 86%, rgba(253, 224, 71, 0.12), transparent 24%), linear-gradient(135deg, #ffffff 0%, #fffefb 42%, #fffbe8 62%, #ffffff 100%)",
   },
 } as const;
 
@@ -64,6 +68,41 @@ export function SiteShell({ children }: { children: ReactNode }) {
     "--tilt": "0deg",
     ...themeStyles[theme],
   };
+
+  useEffect(() => {
+    function isExtensionRemoveChildError(message: unknown) {
+      return (
+        typeof message === "string" &&
+        message.includes("Cannot read properties of null") &&
+        message.includes("removeChild")
+      );
+    }
+
+    function handleWindowError(event: ErrorEvent) {
+      if (isExtensionRemoveChildError(event.message)) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    }
+
+    function handleUnhandledRejection(event: PromiseRejectionEvent) {
+      const reason = event.reason;
+      const message =
+        reason instanceof Error ? reason.message : String(reason ?? "");
+
+      if (isExtensionRemoveChildError(message)) {
+        event.preventDefault();
+      }
+    }
+
+    window.addEventListener("error", handleWindowError);
+    window.addEventListener("unhandledrejection", handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener("error", handleWindowError);
+      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+    };
+  }, []);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("portfolio-theme");
@@ -82,7 +121,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-    document.body.style.background = theme === "light" ? "#fff7ed" : "#070812";
+    document.body.style.background = theme === "light" ? "#ffffff" : "#020204";
     window.localStorage.setItem("portfolio-theme", theme);
   }, [theme]);
 
