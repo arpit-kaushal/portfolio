@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SiteShell } from "../components/SiteShell";
+
+const siteFont = localFont({
+  src: "../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
+  variable: "--site-font",
+  display: "swap",
+  weight: "100 900",
+});
 
 export const metadata: Metadata = {
   title: "Arpit Kaushal",
@@ -22,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning>
+      <body className={siteFont.variable} suppressHydrationWarning>
         <SiteShell>{children}</SiteShell>
       </body>
     </html>
