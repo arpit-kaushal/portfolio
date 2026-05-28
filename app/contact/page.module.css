@@ -261,6 +261,10 @@
     padding-right: 0;
   }
 
+  .page {
+    padding-top: 24px;
+  }
+
   .floatingIcon {
     animation-name: none;
   }
