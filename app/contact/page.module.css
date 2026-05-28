@@ -118,10 +118,10 @@
 
 .form button {
   align-items: center;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.64), rgba(255, 255, 255, 0.22));
+  background: linear-gradient(135deg, var(--accent), var(--accentTwo));
   border: 0;
   border-radius: 10px;
-  color: white;
+  color: #070812;
   cursor: pointer;
   display: inline-flex;
   font-weight: 900;
@@ -132,12 +132,12 @@
 }
 
 .light .form button {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.32), rgba(255, 255, 255, 0.58));
-  color: #111827;
+  background: linear-gradient(135deg, var(--accent), var(--accentThree));
+  color: #fffaf0;
 }
 
 .form button:hover {
-  color: #facc15;
+  color: #fffaf0;
 }
 
 .status {
@@ -262,7 +262,7 @@
   }
 
   .page {
-    padding-top: 24px;
+    padding-top: 10px;
   }
 
   .floatingIcon {

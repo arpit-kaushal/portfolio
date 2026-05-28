@@ -220,7 +220,7 @@
 }
 
 .links a:hover {
-  color: #a855f7;
+  color: var(--accent);
 }
 
 @keyframes floatProjectIconA {
@@ -270,8 +270,15 @@
 
 @media (max-width: 1100px) {
   .page {
-    padding-top: 24px;
+    padding-top: 10px;
     padding-right: 0;
+  }
+
+  .title {
+    font-size: clamp(2.35rem, 10vw, 3.25rem);
+    line-height: 1.04;
+    margin-bottom: 24px;
+    max-width: 100%;
   }
 
   .grid {
@@ -280,5 +287,13 @@
 
   .floatingProjectIcon {
     animation-name: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .title {
+    font-size: clamp(2rem, 9vw, 2.55rem);
+    line-height: 1.08;
+    margin-bottom: 20px;
   }
 }

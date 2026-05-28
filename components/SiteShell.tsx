@@ -24,32 +24,32 @@ const links = [
 
 const themeStyles = {
   dark: {
-    "--bg": "#070b18",
-    "--panel": "rgba(13, 20, 38, 0.76)",
-    "--panelStrong": "rgba(24, 34, 58, 0.9)",
-    "--text": "#f8fbff",
-    "--muted": "#aeb9cc",
-    "--line": "rgba(255, 255, 255, 0.13)",
-    "--lineStrong": "rgba(148, 163, 184, 0.38)",
-    "--accent": "#9b87f5",
-    "--accentTwo": "#38bdf8",
-    "--accentThree": "#d6b36a",
+    "--bg": "#070812",
+    "--panel": "rgba(10, 18, 34, 0.78)",
+    "--panelStrong": "rgba(18, 32, 54, 0.93)",
+    "--text": "#fff8ec",
+    "--muted": "#aab8cc",
+    "--line": "rgba(255, 248, 236, 0.14)",
+    "--lineStrong": "rgba(125, 249, 225, 0.38)",
+    "--accent": "#ff4fd8",
+    "--accentTwo": "#36f5c7",
+    "--accentThree": "#ffd166",
     background:
-      "radial-gradient(circle at 16% 16%, rgba(155, 135, 245, 0.16), transparent 32%), radial-gradient(circle at 84% 22%, rgba(56, 189, 248, 0.13), transparent 34%), radial-gradient(circle at 54% 90%, rgba(214, 179, 106, 0.1), transparent 38%), linear-gradient(135deg, #070b18 0%, #101827 52%, #07111d 100%)",
+      "radial-gradient(circle at 12% 14%, rgba(255, 79, 216, 0.2), transparent 31%), radial-gradient(circle at 86% 18%, rgba(54, 245, 199, 0.16), transparent 34%), radial-gradient(circle at 50% 92%, rgba(255, 209, 102, 0.13), transparent 38%), linear-gradient(135deg, #070812 0%, #111b2f 44%, #071b22 72%, #13091c 100%)",
   },
   light: {
-    "--bg": "#d9e9ff",
-    "--panel": "rgba(226, 235, 246, 0.86)",
-    "--panelStrong": "rgba(203, 216, 232, 0.96)",
-    "--text": "#0f1f35",
-    "--muted": "#47566a",
-    "--line": "rgba(15, 31, 53, 0.14)",
-    "--lineStrong": "rgba(24, 63, 105, 0.28)",
-    "--accent": "#3347a8",
-    "--accentTwo": "#087f8c",
-    "--accentThree": "#a46a22",
+    "--bg": "#fff7ed",
+    "--panel": "rgba(255, 255, 255, 0.74)",
+    "--panelStrong": "rgba(255, 249, 238, 0.94)",
+    "--text": "#182033",
+    "--muted": "#5b6476",
+    "--line": "rgba(24, 32, 51, 0.13)",
+    "--lineStrong": "rgba(20, 184, 166, 0.34)",
+    "--accent": "#6d28d9",
+    "--accentTwo": "#0f9f8e",
+    "--accentThree": "#f97316",
     background:
-      "radial-gradient(circle at 12% 16%, rgba(99, 102, 241, 0.34), transparent 30%), radial-gradient(circle at 82% 16%, rgba(20, 184, 166, 0.3), transparent 32%), radial-gradient(circle at 22% 82%, rgba(236, 72, 153, 0.22), transparent 34%), radial-gradient(circle at 72% 78%, rgba(245, 158, 11, 0.24), transparent 35%), linear-gradient(135deg, #d9e9ff 0%, #d7f4ef 38%, #eee0ff 68%, #ffe8c7 100%)",
+      "radial-gradient(circle at 10% 12%, rgba(109, 40, 217, 0.22), transparent 30%), radial-gradient(circle at 84% 14%, rgba(15, 159, 142, 0.28), transparent 32%), radial-gradient(circle at 18% 84%, rgba(249, 115, 22, 0.22), transparent 33%), radial-gradient(circle at 76% 78%, rgba(244, 63, 94, 0.18), transparent 35%), linear-gradient(135deg, #fff7ed 0%, #e7fff8 36%, #f4ecff 68%, #fff1d6 100%)",
   },
 } as const;
 
@@ -82,7 +82,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-    document.body.style.background = theme === "light" ? "#d9e9ff" : "#060713";
+    document.body.style.background = theme === "light" ? "#fff7ed" : "#070812";
     window.localStorage.setItem("portfolio-theme", theme);
   }, [theme]);
 

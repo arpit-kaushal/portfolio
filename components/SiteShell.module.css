@@ -184,7 +184,7 @@
 }
 
 .themeButton:hover {
-  color: #facc15;
+  color: var(--accentThree);
 }
 
 .themeButton span {
