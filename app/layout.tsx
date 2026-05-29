@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { JsonLd } from "../components/JsonLd";
 import { SiteShell } from "../components/SiteShell";
+import { rootMetadata } from "../lib/seo";
 
 const siteFont = localFont({
   src: "../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
@@ -10,18 +12,7 @@ const siteFont = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Arpit Kaushal",
-  description: "Portfolio website of Arpit Kaushal.",
-  icons: {
-    icon: [
-      { url: "/logo.png", type: "image/svg+xml" },
-      { url: "/logo.png", type: "image/png" },
-    ],
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -31,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={siteFont.variable} suppressHydrationWarning>
+        <JsonLd />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>
