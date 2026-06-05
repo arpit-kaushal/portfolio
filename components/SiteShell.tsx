@@ -8,7 +8,8 @@ import {
   type ReactNode,
 } from "react";
 import Link from "next/link";
-import { Moon, Sun } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { FileText, Moon, Sun } from "lucide-react";
 import styles from "./SiteShell.module.css";
 import { SocialDock } from "./SocialDock";
 
@@ -57,10 +58,29 @@ const themeStyles = {
   },
 } as const;
 
-export function SiteShell({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+function persistTheme(theme: Theme) {
+  window.localStorage.setItem("portfolio-theme", theme);
+  document.cookie = `portfolio-theme=${theme}; path=/; max-age=31536000; SameSite=Lax`;
+}
+
+function applyThemeToDocument(theme: Theme) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+  document.body.style.background = theme === "light" ? "#ffffff" : "#020204";
+}
+
+export function SiteShell({
+  children,
+  initialTheme,
+}: {
+  children: ReactNode;
+  initialTheme: Theme;
+}) {
+  const [theme, setTheme] = useState<Theme>(initialTheme);
+  const pathname = usePathname();
   const shellRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef<number | null>(null);
+  const isHome = pathname === "/";
 
   const style: ShellStyle = {
     "--mx": "0px",
@@ -105,12 +125,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem("portfolio-theme");
-
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setTheme(savedTheme);
-    }
-
     return () => {
       if (frameRef.current !== null) {
         cancelAnimationFrame(frameRef.current);
@@ -119,14 +133,16 @@ export function SiteShell({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
-    document.body.style.background = theme === "light" ? "#ffffff" : "#020204";
-    window.localStorage.setItem("portfolio-theme", theme);
+    applyThemeToDocument(theme);
+    persistTheme(theme);
   }, [theme]);
 
   function toggleTheme() {
-    setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
+    setTheme((currentTheme) => {
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      applyThemeToDocument(nextTheme);
+      return nextTheme;
+    });
   }
 
   return (
@@ -161,26 +177,42 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
       <header className={styles.header}>
         <Link href="/" className={styles.brand} aria-label="Go to home">
-          <img src="/logo.png" alt="Portfolio logo" />
+          <img src="/logo.png" alt="Arpit" />
         </Link>
-
-        <button
-          className={styles.themeButton}
-          type="button"
-          onClick={toggleTheme}
-          onPointerDown={(event) => event.stopPropagation()}
-          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-        >
-          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
       </header>
 
-      <nav className={styles.nav} aria-label="Portfolio pages">
-        {links.map((link) => (
-          <Link href={link.href} key={link.href} className={styles.navLink}>
-            <span>{link.label}</span>
-          </Link>
-        ))}
+      <nav
+        className={`${styles.nav} ${isHome ? styles.navHome : styles.navInterior}`}
+        aria-label="Portfolio pages"
+      >
+        <div className={styles.navPages}>
+          {links.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                href={link.href}
+                key={link.href}
+                className={`${styles.navLink} ${isActive ? styles.activeNavLink : ""}`}
+              >
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+        <div className={styles.navTools}>
+          <a className={styles.resumeLink} href="/Arpit-Kaushal.pdf" target="_blank" aria-label="View resume">
+            <FileText size={15} />
+          </a>
+          <button
+            className={`${styles.themeButton} ${styles.themeButtonInNav}`}
+            type="button"
+            onClick={toggleTheme}
+            onPointerDown={(event) => event.stopPropagation()}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+        </div>
       </nav>
 
       <SocialDock />

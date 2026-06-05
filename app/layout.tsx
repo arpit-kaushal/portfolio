@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { SiteShell } from "../components/SiteShell";
+
+type Theme = "dark" | "light";
 
 const siteFont = localFont({
   src: "../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
@@ -23,15 +26,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const savedTheme = cookieStore.get("portfolio-theme")?.value;
+  const initialTheme: Theme = savedTheme === "light" ? "light" : "dark";
+
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      data-theme={initialTheme}
+      style={{ colorScheme: initialTheme }}
+      suppressHydrationWarning
+    >
       <body className={siteFont.variable} suppressHydrationWarning>
-        <SiteShell>{children}</SiteShell>
+        <SiteShell initialTheme={initialTheme}>{children}</SiteShell>
       </body>
     </html>
   );

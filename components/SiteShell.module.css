@@ -2,7 +2,7 @@
   color: var(--text);
   isolation: isolate;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   padding: 34px min(8vw, 96px) 72px;
   position: relative;
 }
@@ -139,172 +139,147 @@
   z-index: 30;
 }
 
-.brand,
+.brand {
+  align-items: center;
+  backdrop-filter: blur(24px);
+  background: color-mix(in srgb, var(--panelStrong) 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow:
+    0 22px 80px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  gap: 10px;
+  height: 46px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1px;
+  width: 46px;
+}
+
+.brand img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
 .themeButton {
   align-items: center;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
-  display: inline-flex;
-  gap: 10px;
-  padding: 10px 14px;
-}
-
-.brand img {
-  border-radius: 50%;
-  height: 34px;
-  object-fit: cover;
-  width: 34px;
-}
-
-.brand span {
-  font-weight: 900;
-  letter-spacing: 0.02em;
-}
-
-.themeButton {
   color: var(--text);
   cursor: pointer;
   display: grid;
-  font-size: 1.4rem;
   height: 48px;
+  padding: 0;
   place-items: center;
   pointer-events: auto;
-  padding: 0;
   position: fixed;
   right: min(8vw, 96px);
   top: 26px;
-  z-index: 999;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
   width: 48px;
+  z-index: 999;
 }
 
 .themeButton:hover {
   color: var(--accentThree);
+  transform: translateY(-1px);
 }
 
-.themeButton span {
-  line-height: 1;
+.themeButtonInNav {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  flex: 0 0 auto;
+  height: 32px;
+  min-height: 32px;
+  position: static;
+  right: auto;
+  top: auto;
+  width: 32px;
+  z-index: auto;
+}
+
+.themeButtonInNav:hover {
+  background: color-mix(in srgb, var(--text) 10%, transparent);
 }
 
 .nav {
   align-items: center;
-  background: transparent;
-  border: 0;
-  border-radius: 50%;
-  box-shadow: none;
-  height: 448px;
-  overflow: visible;
-  padding: 0;
-  position: fixed;
-  right: -224px;
-  top: 50%;
-  width: 448px;
-  transform: translateY(-50%);
-  z-index: 20;
-}
-
-.nav::before {
-  animation: wheelSpin 22s linear infinite;
-  background:
-    radial-gradient(circle, transparent 0 25%, var(--wheelLine) 25.5% 31%, transparent 31.5%),
-    radial-gradient(circle, transparent 0 84%, var(--wheelLine) 84.5% 91%, transparent 91.5%),
-    radial-gradient(circle, transparent 0 71%, var(--wheelLine) 71.4% 73.2%, transparent 73.8%),
-    repeating-conic-gradient(
-      from -2deg,
-      transparent 0deg 7deg,
-      var(--wheelLine) 7deg 9deg,
-      transparent 9deg 14deg
-    ),
-    repeating-conic-gradient(
-      from 4deg,
-      transparent 0deg 17deg,
-      var(--wheelLine) 17deg 20deg,
-      transparent 20deg 30deg
-    );
-  border: 18px solid var(--wheelLine);
-  border-radius: 50%;
+  backdrop-filter: blur(24px);
+  background: color-mix(in srgb, var(--panelStrong) 72%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 999px;
   box-shadow:
-    -28px 28px 100px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 8px var(--wheelGlow),
-    inset 0 0 60px rgba(255, 255, 255, 0.045);
-  content: "";
-  inset: 0;
-  opacity: 0.95;
-  position: absolute;
+    0 22px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
+  padding: 5px 8px;
+  position: fixed;
+  top: 30px;
+  z-index: 32;
 }
 
-.nav::after {
-  background:
-    radial-gradient(circle, var(--wheelLine) 0 36%, transparent 37%),
-    radial-gradient(circle, transparent 0 52%, var(--wheelLine) 53% 56%, transparent 57%);
-  border: 2px solid var(--wheelLine);
-  border-radius: 50%;
-  box-shadow: 0 0 36px var(--wheelGlow);
-  content: "";
-  inset: 156px;
-  opacity: 1;
-  position: absolute;
+.navHome {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.nav:has(.navLink:hover)::before {
-  animation-play-state: paused;
+.navInterior {
+  right: min(8vw, 96px);
+}
+
+.navPages,
+.navTools {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.navTools {
+  border-left: 1px solid var(--line);
+  gap: 0;
+  padding-left: 6px;
 }
 
 .navLink {
   align-items: center;
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-  border: 1px solid var(--wheelLine);
+  background: transparent;
+  border: 0;
   border-radius: 999px;
-  color: var(--wheelLine);
+  color: var(--muted);
   display: flex;
-  font-size: 13px;
-  font-weight: 950;
+  font-size: 0.84rem;
+  font-weight: 800;
   gap: 9px;
   isolation: isolate;
-  letter-spacing: 0.1em;
-  min-width: 134px;
-  padding: 14px 17px;
-  position: absolute;
-  text-transform: uppercase;
-  transform-origin: center;
+  letter-spacing: 0;
+  min-width: 0;
+  padding: 9px 14px;
+  position: relative;
+  text-transform: none;
   transition:
     background 220ms ease,
     color 220ms ease,
     box-shadow 220ms ease,
     transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  z-index: 2;
 }
 
 .navLink span {
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  border-radius: 999px;
-  box-shadow: 0 0 18px color-mix(in srgb, var(--bg) 85%, transparent);
-  padding: 2px 4px;
-}
-
-.navLink:nth-child(1) {
-  left: 124px;
-  top: 58px;
-}
-
-.navLink:nth-child(2) {
-  left: 82px;
-  top: 154px;
-}
-
-.navLink:nth-child(3) {
-  left: 82px;
-  top: 250px;
-}
-
-.navLink:nth-child(4) {
-  left: 124px;
-  top: 346px;
+  position: relative;
+  z-index: 1;
 }
 
 .navLink::after {
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  background: linear-gradient(135deg, rgba(255, 176, 0, 0.2), rgba(255, 102, 0, 0.14));
   border-radius: inherit;
   content: "";
   inset: 0;
@@ -314,16 +289,42 @@
   z-index: -1;
 }
 
+.activeNavLink {
+  background: color-mix(in srgb, var(--text) 12%, transparent);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
 .navLink:hover {
-  box-shadow:
-    0 18px 42px var(--wheelGlow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  color: var(--wheelLine);
-  transform: translateX(-14px) translateY(-4px) rotate(-8deg) scale(1.12);
+  color: var(--text);
+  transform: translateY(-1px);
 }
 
 .navLink:hover::after {
   opacity: 1;
+}
+
+.resumeLink {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--muted);
+  display: grid;
+  min-height: 32px;
+  padding: 0;
+  place-items: center;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+  width: 32px;
+}
+
+.resumeLink:hover {
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  color: var(--accentThree);
+  transform: translateY(-1px);
 }
 
 .content {
@@ -348,6 +349,17 @@
     pointer-events: auto;
   }
 
+  .brand img {
+    height: 100%;
+    max-width: none;
+  }
+
+  .brand {
+    height: 40px;
+    padding: 1px;
+    width: 40px;
+  }
+
   .themeButton {
     bottom: 22px;
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
@@ -355,20 +367,23 @@
     position: fixed;
     right: 20px;
     top: auto;
-    z-index: 999;
+  }
+
+  .themeButtonInNav {
+    bottom: auto;
+    box-shadow: none;
+    height: 30px;
+    min-height: 30px;
+    position: static;
+    right: auto;
+    top: auto;
+    width: 30px;
   }
 
   .nav {
-    background: color-mix(in srgb, var(--panelStrong) 88%, transparent);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
-    display: flex;
-    gap: 4px;
-    height: auto;
+    gap: 6px;
     left: 88px;
     max-width: none;
-    overflow: visible;
     padding: 4px;
     right: 20px;
     top: 24px;
@@ -376,9 +391,21 @@
     width: auto;
   }
 
-  .nav::before,
-  .nav::after {
-    content: none;
+  .navHome,
+  .navInterior {
+    left: 88px;
+    right: 20px;
+    transform: none;
+  }
+
+  .navPages {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .navTools {
+    gap: 0;
+    padding-left: 5px;
   }
 
   .navLink {
@@ -394,19 +421,19 @@
     min-width: 0;
     overflow: hidden;
     padding: 8px 2px;
-    position: relative;
-    inset: auto;
     text-align: center;
     transform: none;
     white-space: nowrap;
   }
 
-  .navLink:nth-child(1),
-  .navLink:nth-child(2),
-  .navLink:nth-child(3),
-  .navLink:nth-child(4) {
-    left: auto;
-    top: auto;
+  .resumeLink {
+    min-height: 30px;
+    width: 30px;
+  }
+
+  .resumeLink svg {
+    height: 16px;
+    width: 16px;
   }
 
   .navLink:hover {
@@ -415,10 +442,4 @@
     transform: none;
   }
 
-}
-
-@keyframes wheelSpin {
-  to {
-    transform: rotate(360deg);
-  }
 }

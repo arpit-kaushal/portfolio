@@ -3,7 +3,9 @@
   gap: 52px;
   grid-template-columns: 1fr;
   min-height: 100vh;
-  padding: 92px 210px 64px 0;
+  margin-inline: auto;
+  max-width: 1180px;
+  padding: 108px 0 64px;
   position: relative;
 }
 
@@ -258,7 +260,6 @@
   .page,
   .contactGrid {
     grid-template-columns: 1fr;
-    padding-right: 0;
   }
 
   .page {

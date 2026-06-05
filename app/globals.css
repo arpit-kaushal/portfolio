@@ -7,6 +7,36 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html[data-theme="light"] main {
+  --bg: #ffffff !important;
+  --panel: rgba(255, 255, 255, 0.78) !important;
+  --panelStrong: rgba(255, 255, 255, 0.96) !important;
+  --text: #182033 !important;
+  --muted: #5b6476 !important;
+  --line: rgba(24, 32, 51, 0.13) !important;
+  --lineStrong: rgba(20, 184, 166, 0.34) !important;
+  --wheelLine: rgba(0, 0, 0, 0.68) !important;
+  --wheelGlow: rgba(0, 0, 0, 0.14) !important;
+  --accent: #6d28d9 !important;
+  --accentTwo: #0f9f8e !important;
+  --accentThree: #f97316 !important;
+  background:
+    radial-gradient(circle at 16% 16%, rgba(250, 204, 21, 0.12), transparent 18%),
+    radial-gradient(circle at 82% 18%, rgba(234, 179, 8, 0.08), transparent 21%),
+    radial-gradient(circle at 48% 86%, rgba(253, 224, 71, 0.12), transparent 24%),
+    linear-gradient(135deg, #ffffff 0%, #fffefb 42%, #fffbe8 62%, #ffffff 100%) !important;
+  color: #182033 !important;
+}
+
+html[data-theme="dark"] main {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(22, 163, 74, 0.11), transparent 28%),
+    radial-gradient(circle at 78% 24%, rgba(34, 197, 94, 0.08), transparent 32%),
+    radial-gradient(circle at 50% 88%, rgba(21, 128, 61, 0.1), transparent 36%),
+    linear-gradient(135deg, #000000 0%, #010301 34%, #041006 64%, #000000 100%) !important;
+  color: #fff8ec !important;
+}
+
 *,
 *::before,
 *::after {
