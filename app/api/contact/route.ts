@@ -1,15 +1,28 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 
 const requiredFields = ["name", "email", "message"] as const;
 
-function hasMailConfig() {
+const notifyHubUrl =
+  process.env.NOTIFYHUB_API_URL ??
+  "https://notifyhub.ankitkaushal.in/v1/notifications/email";
+
+function hasNotifyHubConfig() {
   return Boolean(
-    process.env.SMTP_HOST &&
-      process.env.SMTP_USER &&
-      process.env.SMTP_PASS &&
-      process.env.CONTACT_TO,
+    process.env.NOTIFYHUB_BEARER_TOKEN &&
+      process.env.NOTIFYHUB_TO &&
+      process.env.NOTIFYHUB_TEMPLATE_ID,
   );
+}
+
+function formatTimestamp(date: Date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(date);
 }
 
 export async function POST(request: Request) {
@@ -25,40 +38,40 @@ export async function POST(request: Request) {
 
   const { name, email, message } = body;
 
-  if (!hasMailConfig()) {
+  if (!hasNotifyHubConfig()) {
     console.log("Contact form demo message:", { name, email, message });
     return NextResponse.json(
-      {
-        message:
-          "Message sent successfully.",
-      },
+      { message: "Message sent successfully." },
       { status: 202 },
     );
   }
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: process.env.SMTP_SECURE === "true",
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+  const response = await fetch(notifyHubUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.NOTIFYHUB_BEARER_TOKEN}`,
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      to: process.env.NOTIFYHUB_TO,
+      templateId: process.env.NOTIFYHUB_TEMPLATE_ID,
+      variables: {
+        name,
+        email,
+        message,
+        timestamp: formatTimestamp(new Date()),
+      },
+    }),
   });
 
-  await transporter.sendMail({
-    from: `"${name}" <${process.env.SMTP_USER}>`,
-    replyTo: email,
-    to: process.env.CONTACT_TO,
-    subject: `Portfolio contact from ${name}`,
-    text: message,
-    html: `
-      <h2>New portfolio message</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p>${message}</p>
-    `,
-  });
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => "");
+    console.error("NotifyHub error:", response.status, errorText);
+    return NextResponse.json(
+      { message: "Unable to send message. Please try again later." },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ message: "Message sent successfully." });
 }

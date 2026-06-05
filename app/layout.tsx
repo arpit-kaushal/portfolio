@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import "./globals.css";
+import { JsonLd } from "../components/JsonLd";
 import { SiteShell } from "../components/SiteShell";
+import { rootMetadata } from "../lib/seo";
 
 type Theme = "dark" | "light";
 
@@ -13,18 +15,7 @@ const siteFont = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Arpit Kaushal",
-  description: "Portfolio website of Arpit Kaushal.",
-  icons: {
-    icon: [
-      { url: "/logo.png", type: "image/svg+xml" },
-      { url: "/logo.png", type: "image/png" },
-    ],
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
-};
+export const metadata: Metadata = rootMetadata;
 
 export default async function RootLayout({
   children,
