@@ -13,10 +13,7 @@ const defaultOgImage = "/about-photo.png";
 
 export const rootMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: siteName,
-    template: `%s | ${siteName}`,
-  },
+  title: siteName,
   description: siteDescription,
   keywords: siteKeywords,
   authors: [{ name: siteName, url: siteUrl }],
