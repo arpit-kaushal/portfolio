@@ -3,7 +3,7 @@
   isolation: isolate;
   min-height: 100vh;
   overflow-x: hidden;
-  padding: 34px min(8vw, 96px) 72px;
+  padding: 34px min(8vw, 96px) 0;
   position: relative;
 }
 
@@ -332,9 +332,218 @@
   z-index: 1;
 }
 
+.footer {
+  background:
+    radial-gradient(circle at 50% 44%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 42%),
+    color-mix(in srgb, var(--bg) 94%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  left: 50%;
+  margin-top: 80px;
+  min-height: 330px;
+  overflow: hidden;
+  position: relative;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 1;
+}
+
+.footerMarquee {
+  align-items: center;
+  display: flex;
+  height: 88px;
+  overflow: visible;
+  position: relative;
+}
+
+.footerMarqueeTrack {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--panelStrong) 88%, var(--accent)),
+    color-mix(in srgb, var(--panelStrong) 90%, var(--accentTwo)),
+    color-mix(in srgb, var(--panelStrong) 88%, var(--accent))
+  );
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  left: 50%;
+  overflow: hidden;
+  padding: 10px 0;
+  position: relative;
+  transform: translateX(-50%) translateY(12px) rotate(-1.25deg);
+  width: calc(100vw + 96px);
+}
+
+.footerMarqueeScroller {
+  animation: footerTicker 27s linear infinite;
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.footerMarqueeGroup {
+  align-items: center;
+  display: flex;
+  flex: none;
+}
+
+.footerMarqueeGroup span {
+  align-items: center;
+  color: #ffffff;
+  display: flex;
+  flex: none;
+  font-size: 0.72rem;
+  font-weight: 800;
+  gap: 38px;
+  letter-spacing: 0.22em;
+  padding-right: 38px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.footerMarquee svg {
+  color: var(--accent);
+}
+
+.footerMain {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 24px 74px;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+
+.footerKicker {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.footerMain h2 {
+  background: linear-gradient(180deg, var(--text) 24%, color-mix(in srgb, var(--text) 44%, transparent));
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 18px 26px color-mix(in srgb, var(--accent) 10%, transparent));
+  font-size: clamp(2.8rem, 5.2vw, 4.9rem);
+  font-weight: 850;
+  letter-spacing: -0.075em;
+  line-height: 0.9;
+  margin: 0 0 20px;
+}
+.footerContactRow {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  max-width: 520px;
+  width: 100%;
+}
+
+.footerContactForm {
+  align-self: flex-end;
+  margin-right: clamp(12px, 6vw, 96px);
+  max-width: 460px;
+  text-align: left;
+  width: 100%;
+}
+
+.footerContactForm form {
+  border-radius: 24px;
+  gap: 10px;
+  padding: 18px;
+  width: 100%;
+}
+
+.footerContactForm form input,
+.footerContactForm form textarea {
+  border-radius: 14px;
+  padding: 13px 15px;
+}
+
+.footerContactForm form textarea {
+  min-height: 110px;
+}
+
+.footerSocials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.footerSocials a {
+  background: color-mix(in srgb, var(--panel) 58%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 10px 18px;
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.footerSocials a:hover {
+  border-color: var(--lineStrong);
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+.footerWordmark {
+  bottom: -0.18em;
+  color: color-mix(in srgb, var(--text) 8%, transparent);
+  font-size: clamp(11rem, 30vw, 31rem);
+  font-weight: 900;
+  left: 50%;
+  letter-spacing: -0.09em;
+  line-height: 0.64;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-51%);
+  white-space: nowrap;
+}
+
+@keyframes footerTicker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.footerBottom {
+  align-items: center;
+  bottom: 18px;
+  display: grid;
+  font-size: 0.68rem;
+  grid-template-columns: 1fr auto 1fr;
+  left: 22px;
+  letter-spacing: 0.08em;
+  position: absolute;
+  right: 22px;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.footerBottom p {
+  color: var(--muted);
+  grid-column: 2;
+  margin: 0;
+}
+
+.footerBottom span {
+  color: var(--muted);
+  grid-column: 3;
+  justify-self: end;
+}
+
 @media (max-width: 980px) {
   .shell {
-    padding: 104px 20px 96px;
+    padding: 104px 20px 0;
   }
 
   .header {
@@ -439,7 +648,92 @@
   .navLink:hover {
     background: transparent;
     box-shadow: none;
+    color: var(--muted);
     transform: none;
   }
 
+  .navLink:hover::after {
+    opacity: 0;
+  }
+
+  .activeNavLink,
+  .activeNavLink:hover {
+    background: color-mix(in srgb, var(--text) 12%, transparent);
+    color: var(--text);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .footer {
+    margin-top: 48px;
+    min-height: 330px;
+  }
+
+  .footerMarquee {
+    height: 68px;
+  }
+
+  .footerMain {
+    padding: 28px 18px 84px;
+  }
+
+  .footerMain h2 {
+    font-size: clamp(3rem, 13vw, 5.8rem);
+    margin-bottom: 22px;
+  }
+
+  .footerContactRow {
+    max-width: 500px;
+  }
+
+  .footerContactForm {
+    align-self: center;
+    margin-right: 0;
+    max-width: 500px;
+  }
+
+  .footerBottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .footerBottom span {
+    display: none;
+  }
+
+}
+
+@media (max-width: 560px) {
+  .footer {
+    border-radius: 0;
+  }
+
+  .footerMain {
+    padding-inline: 14px;
+  }
+
+  .footerMain h2 {
+    letter-spacing: -0.065em;
+  }
+
+  .emailButton {
+    min-width: 210px;
+  }
+
+  .footerSocials {
+    max-width: 330px;
+  }
+
+  .footerBottom {
+    left: 12px;
+    right: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footerMarqueeScroller {
+    animation-duration: 80s;
+  }
 }

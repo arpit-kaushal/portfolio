@@ -166,6 +166,26 @@
   display: inline-flex;
   font-size: 0.86rem;
   font-weight: 950;
+  justify-content: center;
+  min-width: 24px;
+}
+
+.skillMark img {
+  display: block;
+  height: 22px;
+  object-fit: contain;
+  width: 22px;
+}
+
+.skillTextMark {
+  background: color-mix(in srgb, var(--skill-color) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--skill-color) 52%, transparent);
+  border-radius: 8px;
+  color: var(--skill-color);
+  font-size: 0.72rem;
+  height: 24px;
+  letter-spacing: 0;
+  min-width: 26px;
 }
 
 .experienceSection {
@@ -263,6 +283,27 @@
 
 .workHeader h3 svg {
   color: #ffb000;
+}
+
+.companyLogo {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  border-radius: 12px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 42px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4px;
+  width: 42px;
+}
+
+.companyLogo img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .workRole {

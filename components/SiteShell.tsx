@@ -9,9 +9,11 @@ import {
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, Moon, Sun } from "lucide-react";
+import { FileText, Moon, Sparkles, Sun } from "lucide-react";
 import styles from "./SiteShell.module.css";
 import { SocialDock } from "./SocialDock";
+import { siteName } from "../lib/site";
+import { resume, socialMedia } from "../lib/portfolio-data";
 
 type Theme = "dark" | "light";
 type ShellStyle = CSSProperties & Record<`--${string}`, string>;
@@ -21,6 +23,14 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
+];
+
+const footerMarquee = [
+  "Designing the Future",
+  "Debugging Reality",
+  "Creating Cool Stuff",
+  "Built with Passion",
+  "Beyond the Screen",
 ];
 
 const themeStyles = {
@@ -78,9 +88,10 @@ export function SiteShell({
 }) {
   const [theme, setTheme] = useState<Theme>(initialTheme);
   const pathname = usePathname();
+  const [currentPath, setCurrentPath] = useState(pathname);
   const shellRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef<number | null>(null);
-  const isHome = pathname === "/";
+  const isHome = currentPath === "/";
 
   const style: ShellStyle = {
     "--mx": "0px",
@@ -120,7 +131,10 @@ export function SiteShell({
 
     return () => {
       window.removeEventListener("error", handleWindowError);
-      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+      window.removeEventListener(
+        "unhandledrejection",
+        handleUnhandledRejection,
+      );
     };
   }, []);
 
@@ -136,6 +150,24 @@ export function SiteShell({
     applyThemeToDocument(theme);
     persistTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    setCurrentPath(pathname);
+  }, [pathname]);
+
+  useEffect(() => {
+    function syncCurrentPath() {
+      setCurrentPath(window.location.pathname);
+    }
+
+    window.addEventListener("popstate", syncCurrentPath);
+    window.addEventListener("pageshow", syncCurrentPath);
+
+    return () => {
+      window.removeEventListener("popstate", syncCurrentPath);
+      window.removeEventListener("pageshow", syncCurrentPath);
+    };
+  }, []);
 
   function toggleTheme() {
     setTheme((currentTheme) => {
@@ -187,12 +219,13 @@ export function SiteShell({
       >
         <div className={styles.navPages}>
           {links.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = currentPath === link.href;
             return (
               <Link
                 href={link.href}
                 key={link.href}
                 className={`${styles.navLink} ${isActive ? styles.activeNavLink : ""}`}
+                aria-current={isActive ? "page" : undefined}
               >
                 <span>{link.label}</span>
               </Link>
@@ -200,7 +233,12 @@ export function SiteShell({
           })}
         </div>
         <div className={styles.navTools}>
-          <a className={styles.resumeLink} href="/Arpit-Kaushal.pdf" target="_blank" aria-label="View resume">
+          <a
+            className={styles.resumeLink}
+            href={resume.href}
+            target="_blank"
+            aria-label="View resume"
+          >
             <FileText size={15} />
           </a>
           <button
@@ -217,7 +255,66 @@ export function SiteShell({
 
       <SocialDock />
       <div className={styles.content}>{children}</div>
+      <Footer />
     </main>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className={styles.footer}>
+      <div
+        className={styles.footerMarquee}
+        aria-label="Professional highlights"
+      >
+        <div className={styles.footerMarqueeTrack}>
+          <div className={styles.footerMarqueeScroller}>
+            {[0, 1].map((copy) => (
+              <div
+                className={styles.footerMarqueeGroup}
+                key={copy}
+                aria-hidden={copy === 1 ? "true" : undefined}
+              >
+                {footerMarquee.map((item) => (
+                  <span key={`${copy}-${item}`}>
+                    <Sparkles size={13} aria-hidden="true" />
+                    {item}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.footerMain}>
+        <h2>My Space</h2>
+        <div className={styles.footerContactRow}>
+          <div className={styles.footerSocials} aria-label="Social links">
+            {socialMedia.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {social.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.footerWordmark} aria-hidden="true">
+        ARPIT
+      </div>
+
+      <div className={styles.footerBottom}>
+        <p>
+          © {new Date().getFullYear()} {siteName}. All rights reserved.
+        </p>
+      </div>
+    </footer>
   );
 }
 

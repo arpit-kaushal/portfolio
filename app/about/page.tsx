@@ -1,72 +1,63 @@
 import styles from "./page.module.css";
 import type { CSSProperties } from "react";
-import {
-  BriefcaseBusiness,
-  Building2,
-  Cable,
-  Code2,
-  Database,
-  FileCode,
-  FlaskConical,
-  GitBranch,
-  LayoutTemplate,
-  MonitorCog,
-  Network,
-  PencilRuler,
-  RefreshCcw,
-  Sparkles,
-  TerminalSquare,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
+import { Building2 } from "lucide-react";
 import { FloatingEmojis } from "./FloatingEmojis";
-
-const experiences = [
-  {
-    company: "Kohli Media LLP",
-    role: "Web Developer",
-    duration: "April 2025 - July 2025",
-    description:
-      "Developed responsive web applications, improved usability and performance, addressed implementation challenges, and supported the delivery of scalable, production-ready solutions.",
-    skills: ["HTML", "CSS", "JavaScript", "Responsive Web Design", "UI Optimization", "Cross-Browser Testing"],
-  },
-  {
-    company: "TechnoHacks Solutions Pvt. Ltd.",
-    role: "Python Developer",
-    duration: "May 2024 - June 2024",
-    description:
-      "Worked on Python-based application development, improved workflow efficiency, and enhanced software quality through testing, troubleshooting, and continuous refinement.",
-    skills: ["Python", "Code Optimization", "Unit Testing", "Debugging", "SDLC"],
-  },
-];
-
-type Skill = {
-  name: string;
-  Icon: LucideIcon;
-  color: string;
-};
+import { experiences, skills } from "../../lib/portfolio-data";
 
 type SkillStyle = CSSProperties & {
   "--skill-color": string;
 };
 
-const skills: Skill[] = [
-  { name: "Python", Icon: Code2, color: "#3776ab" },
-  { name: "C++", Icon: FileCode, color: "#00599c" },
-  { name: "JavaScript", Icon: Zap, color: "#f7df1e" },
-  { name: "HTML", Icon: LayoutTemplate, color: "#e34f26" },
-  { name: "CSS", Icon: PencilRuler, color: "#1572b6" },
-  { name: "React", Icon: RefreshCcw, color: "#61dafb" },
-  { name: "MySQL", Icon: Database, color: "#00758f" },
-  { name: "Machine Learning", Icon: Network, color: "#22c55e" },
-  { name: "Generative AI", Icon: Sparkles, color: "#a78bfa" },
-  { name: "GitHub", Icon: GitBranch, color: "#f8fafc" },
-  { name: "VS Code", Icon: TerminalSquare, color: "#007acc" },
-  { name: "Unit Testing", Icon: FlaskConical, color: "#2ead33" },
-  { name: "Debugging", Icon: MonitorCog, color: "#fb7185" },
-  { name: "Agile Methodology", Icon: GitBranch, color: "#f97316" },
-  { name: "SDLC", Icon: Cable, color: "#38bdf8" },
-];
+const skillLogos: Record<string, { src?: string; mark?: string }> = {
+  Python: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+  },
+  "C++": {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
+  },
+  JavaScript: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+  },
+  HTML: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
+  },
+  CSS: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+  },
+  React: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+  },
+  MySQL: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
+  },
+  "Machine Learning": {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg",
+  },
+  "Generative AI": { mark: "AI" },
+  GitHub: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+  },
+  "VS Code": {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg",
+  },
+  "Unit Testing": {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytest/pytest-original.svg",
+  },
+  Debugging: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/chrome/chrome-original.svg",
+  },
+  "Agile Methodology": {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg",
+  },
+  SDLC: {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+  },
+};
+
+const companyLogos: Record<string, string> = {
+  "Kohli Media LLP": "/logo/kohli.jpg",
+  "TechnoHacks Solutions Pvt. Ltd.": "/logo/techno.jpg",
+};
 
 export default function AboutPage() {
   return (
@@ -75,7 +66,7 @@ export default function AboutPage() {
 
       <section className={styles.descriptionSection}>
         <div className={styles.description}>
-          <h1 className={styles.title}>Who Am I?</h1>
+          <h1 className={styles.title}>Who <span>Am I</span>?</h1>
           <p>
             I am someone who believes that every great idea deserves an
             exceptional presence. With a strong passion for creativity and
@@ -108,23 +99,32 @@ export default function AboutPage() {
           
         </p>
         <div className={styles.skillCloud}>
-          {skills.map((skill) => (
-            <span
-              className={styles.skillPill}
-              key={skill.name}
-              style={{ "--skill-color": skill.color } as SkillStyle}
-            >
-              <span className={styles.skillMark}>
-                <skill.Icon size={20} strokeWidth={2.2} />
+          {skills.map((skill) => {
+            const logo = skillLogos[skill.name];
+            return (
+              <span
+                className={styles.skillPill}
+                key={skill.name}
+                style={{ "--skill-color": skill.color } as SkillStyle}
+              >
+                <span
+                  className={`${styles.skillMark} ${logo?.mark ? styles.skillTextMark : ""}`}
+                >
+                  {logo?.src ? (
+                    <img src={logo.src} alt="" aria-hidden="true" />
+                  ) : (
+                    logo?.mark ?? skill.name.slice(0, 2)
+                  )}
+                </span>
+                {skill.name}
               </span>
-              {skill.name}
-            </span>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       <section className={styles.experienceSection}>
-        <p className={styles.pillHeading}>Work</p>
+        <p className={styles.pillHeading}>My Work</p>
         <h2 className={styles.experienceTitle}>
           Experience
         </h2>
@@ -137,7 +137,13 @@ export default function AboutPage() {
               <div className={styles.workHeader}>
                 <div>
                   <h3>
-                    <BriefcaseBusiness size={18} />
+                    <span className={styles.companyLogo}>
+                      <img
+                        src={companyLogos[experience.company]}
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    </span>
                     {experience.company}
                   </h3>
                   <p className={styles.workRole}>

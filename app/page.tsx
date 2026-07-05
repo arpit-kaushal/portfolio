@@ -1,17 +1,13 @@
 import Link from "next/link";
 import { FileText, MoveDownRight } from "lucide-react";
 import styles from "./page.module.css";
-
-const roles = [
-  "Frontend Developer",
-  "Web Developer",
-  "Software Engineer",
-  "React Developer",
-  "Python Developer",
-  "AI Application Developer",
-  "Full Stack Engineer",
-  "Technology Enthusiast",
-];
+import {
+  experiences,
+  projects,
+  resume,
+  roles,
+  skills,
+} from "../lib/portfolio-data";
 
 export default function HomePage() {
   return (
@@ -32,23 +28,27 @@ export default function HomePage() {
         </div>
         <p className={styles.copy}>
           I build clean, responsive digital experiences with thoughtful details,
-          smooth interactions, and a practical focus on turning ideas into useful
-          products.
+          smooth interactions, and a practical focus on turning ideas into
+          useful products.
         </p>
         <div className={styles.actions}>
           <Link className={styles.primaryAction} href="/projects">
             My Projects
             <MoveDownRight size={19} />
           </Link>
-          <a className={styles.secondaryAction} href="/Arpit-Kaushal.pdf" target="_blank">
+          <a
+            className={styles.secondaryAction}
+            href={resume.href}
+            target="_blank"
+          >
             <FileText size={18} />
-            Resume
+            {resume.label}
           </a>
         </div>
       </div>
 
       <div className={styles.portraitColumn}>
-        <p className={styles.opportunityLabel}>Seeking Opportunities</p>
+        <p className={styles.opportunityLabel}>Open to Work</p>
         <div className={styles.portraitStage} aria-label="Profile picture area">
           <span className={`${styles.orbitRing} ${styles.orbitOne}`} />
           <span className={`${styles.orbitRing} ${styles.orbitTwo}`} />

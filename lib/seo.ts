@@ -14,7 +14,7 @@ const defaultOgImage = "/about-photo.png";
 export const rootMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} | Web Developer & Portfolio`,
+    default: siteName,
     template: `%s | ${siteName}`,
   },
   description: siteDescription,
@@ -54,7 +54,7 @@ export const rootMetadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName,
-    title: `${siteName} | Web Developer & Portfolio`,
+    title: siteName,
     description: siteDescription,
     images: [
       {
@@ -67,7 +67,7 @@ export const rootMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} | Web Developer & Portfolio`,
+    title: siteName,
     description: siteDescription,
     creator: "@iArpitKaushal",
     images: [defaultOgImage],

@@ -22,12 +22,11 @@ export const siteKeywords = [
 
 export const googleSiteVerification = "Lim3qsOSbLcyJyXBcdwYaJSe2A5ZdX2aVG55x2skswE";
 
-export const socialLinks = {
-  twitter: "https://x.com/iArpitKaushal",
-  linkedin: "https://www.linkedin.com/in/im-arpit-kaushal/",
-  github: "https://github.com/arpit-kaushal",
-  instagram: "https://www.instagram.com/iarpitkaushal",
-  facebook: "https://www.facebook.com/iarpitkaushal",
-};
+const socialByPlatform = Object.fromEntries(
+  socialMedia.map(({ platform, href }) => [platform, href]),
+) as Record<SocialPlatform, string>;
+
+export const socialLinks = socialByPlatform;
 
 export const contactEmail = "imarpitkaushal@gmail.com";
+import { socialMedia, type SocialPlatform } from "./portfolio-data";
