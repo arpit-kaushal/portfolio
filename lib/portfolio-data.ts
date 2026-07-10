@@ -98,6 +98,108 @@ export const experiences = [
   },
 ] as const;
 
+export type ShowcaseCategory = "achievement" | "certification" | "extracurricular";
+
+export type ShowcaseItem = {
+  id: string;
+  title: string;
+  organization: string;
+  date: string;
+  sortDate: string;
+  description: string;
+  category: ShowcaseCategory;
+  link?: string;
+};
+
+export const showcaseItems: ReadonlyArray<ShowcaseItem> = [
+  {
+    id: "genai-prompt-engineering",
+    title: "Generative AI & Prompt Engineering",
+    organization: "Coursera · IBM & Vanderbilt University",
+    date: "September 2025",
+    sortDate: "2025-09-01",
+    description:
+      "Completed three Coursera certifications: Generative AI — Prompt Engineering Basics (IBM), Generative AI — Introduction and Applications (IBM), and Prompt Engineering for ChatGPT (Vanderbilt University).",
+    category: "certification",
+    link: "/showcase/genai-certificates.pdf",
+  },
+  {
+    id: "ibm-ml-specialization",
+    title: "IBM Machine Learning Specialization",
+    organization: "Coursera · IBM",
+    date: "June 2025",
+    sortDate: "2025-06-01",
+    description:
+      "Completed a comprehensive specialization covering supervised and unsupervised learning, neural networks, and practical machine learning workflows.",
+    category: "certification",
+    link: "https://www.coursera.org/account/accomplishments/professional-cert/D1O08IPMTDGJ",
+  },
+  {
+    id: "internshala-isp-46",
+    title: "Internshala Student Partner (ISP 46)",
+    organization: "Internshala",
+    date: "November 2024 – January 2025",
+    sortDate: "2025-01-31",
+    description:
+      "Selected as an Internshala Student Partner to promote internships and online trainings, mentor peers on career growth, and represent the brand across campus.",
+    category: "extracurricular",
+    link: "/showcase/internshala-isp-46.pdf",
+  },
+  {
+    id: "tcs-codevita-season-13",
+    title: "TCS CodeVita Season 13",
+    organization: "Tata Consultancy Services",
+    date: "Season 13 · 2025",
+    sortDate: "2025-10-10",
+    description:
+      "Participated in TCS CodeVita Season 13, a global competitive programming contest that challenges problem-solving, algorithmic thinking, and coding skills under timed conditions.",
+    category: "achievement",
+    link: "/showcase/tcs-codevita-season-13.pdf",
+  },
+  {
+    id: "peer-mentor",
+    title: "Peer Mentor",
+    organization: "Reliance Foundation",
+    date: "May 2024",
+    sortDate: "2024-05-01",
+    description:
+      "Selected to mentor peers on technical skills, career planning, and confidence-building — helping others grow through thoughtful guidance and hands-on support.",
+    category: "extracurricular",
+  },
+  {
+    id: "kreativity-home-automation",
+    title: "Third Position — Home Automation Model",
+    organization: "School of Electronics Engineering, KIIT",
+    date: "February 10, 2024",
+    sortDate: "2024-02-10",
+    description:
+      "Secured third place at KREATIVITY-2024 Annual Project Expo for the Home Automation model, recognizing innovation in electronics and embedded systems.",
+    category: "achievement",
+    link: "/showcase/kreativity-home-automation.png",
+  },
+  {
+    id: "tcs-ion-communication-skills",
+    title: "Communication Skills",
+    organization: "TCS iON · Tata Consultancy Services",
+    date: "November 2023",
+    sortDate: "2023-11-01",
+    description:
+      "Earned certification in verbal and non-verbal communication, covering effective communication, barriers, and professional workplace interaction.",
+    category: "certification",
+    link: "/showcase/tcs-ion-communication-skills.pdf",
+  },
+  {
+    id: "reliance-scholarship",
+    title: "Reliance Foundation Undergraduate Scholarship",
+    organization: "Reliance Foundation",
+    date: "June 2023",
+    sortDate: "2023-06-01",
+    description:
+      "Honored with this scholarship for consistent academic excellence, a strong commitment to learning, and the ambition to build technology that creates real-world value.",
+    category: "achievement",
+  },
+];
+
 export const projects: ReadonlyArray<Project> = [
   {
     title: "Social Media Studio",

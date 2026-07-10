@@ -1,7 +1,6 @@
 import styles from "./page.module.css";
 import type { CSSProperties } from "react";
 import { Building2 } from "lucide-react";
-import { FloatingEmojis } from "./FloatingEmojis";
 import { experiences, skills } from "../../lib/portfolio-data";
 
 type SkillStyle = CSSProperties & {
@@ -62,8 +61,6 @@ const companyLogos: Record<string, string> = {
 export default function AboutPage() {
   return (
     <section className={styles.page}>
-      <FloatingEmojis />
-
       <section className={styles.descriptionSection}>
         <div className={styles.description}>
           <h1 className={styles.title}>Who <span>Am I</span>?</h1>

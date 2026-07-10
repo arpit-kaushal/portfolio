@@ -1,16 +1,11 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type ReactNode,
-} from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FileText, Moon, Sparkles, Sun } from "lucide-react";
 import styles from "./SiteShell.module.css";
+import { ContentProtection } from "./ContentProtection";
 import { SocialDock } from "./SocialDock";
 import { siteName } from "../lib/site";
 import { resume, socialMedia } from "../lib/portfolio-data";
@@ -22,6 +17,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
+  { href: "/showcase", label: "Showcase" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -51,20 +47,20 @@ const themeStyles = {
       "radial-gradient(circle at 18% 18%, rgba(22, 163, 74, 0.11), transparent 28%), radial-gradient(circle at 78% 24%, rgba(34, 197, 94, 0.08), transparent 32%), radial-gradient(circle at 50% 88%, rgba(21, 128, 61, 0.1), transparent 36%), linear-gradient(135deg, #000000 0%, #010301 34%, #041006 64%, #000000 100%)",
   },
   light: {
-    "--bg": "#ffffff",
-    "--panel": "rgba(255, 255, 255, 0.78)",
-    "--panelStrong": "rgba(255, 255, 255, 0.96)",
-    "--text": "#182033",
-    "--muted": "#5b6476",
-    "--line": "rgba(24, 32, 51, 0.13)",
-    "--lineStrong": "rgba(20, 184, 166, 0.34)",
-    "--wheelLine": "rgba(0, 0, 0, 0.68)",
-    "--wheelGlow": "rgba(0, 0, 0, 0.14)",
-    "--accent": "#6d28d9",
-    "--accentTwo": "#0f9f8e",
-    "--accentThree": "#f97316",
+    "--bg": "#e7f1ec",
+    "--panel": "rgba(255, 255, 255, 0.72)",
+    "--panelStrong": "rgba(248, 252, 250, 0.92)",
+    "--text": "#10231c",
+    "--muted": "#4a6358",
+    "--line": "rgba(16, 35, 28, 0.12)",
+    "--lineStrong": "rgba(13, 148, 136, 0.38)",
+    "--wheelLine": "rgba(16, 35, 28, 0.62)",
+    "--wheelGlow": "rgba(225, 29, 72, 0.14)",
+    "--accent": "#e11d48",
+    "--accentTwo": "#0d9488",
+    "--accentThree": "#ea580c",
     background:
-      "radial-gradient(circle at 16% 16%, rgba(250, 204, 21, 0.12), transparent 18%), radial-gradient(circle at 82% 18%, rgba(234, 179, 8, 0.08), transparent 21%), radial-gradient(circle at 48% 86%, rgba(253, 224, 71, 0.12), transparent 24%), linear-gradient(135deg, #ffffff 0%, #fffefb 42%, #fffbe8 62%, #ffffff 100%)",
+      "radial-gradient(circle at 12% 14%, rgba(45, 212, 191, 0.22), transparent 28%), radial-gradient(circle at 88% 12%, rgba(251, 113, 133, 0.16), transparent 26%), radial-gradient(circle at 70% 88%, rgba(251, 191, 36, 0.18), transparent 30%), radial-gradient(circle at 18% 86%, rgba(52, 211, 153, 0.16), transparent 28%), linear-gradient(165deg, #dcebe4 0%, #e8f3ee 38%, #f2f7f4 68%, #e6efe9 100%)",
   },
 } as const;
 
@@ -76,7 +72,8 @@ function persistTheme(theme: Theme) {
 function applyThemeToDocument(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   document.documentElement.style.colorScheme = theme;
-  document.body.style.background = theme === "light" ? "#ffffff" : "#020204";
+  document.body.style.background = themeStyles[theme].background;
+  document.body.style.backgroundAttachment = "fixed";
 }
 
 export function SiteShell({
@@ -87,18 +84,13 @@ export function SiteShell({
   initialTheme: Theme;
 }) {
   const [theme, setTheme] = useState<Theme>(initialTheme);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const pathname = usePathname();
   const [currentPath, setCurrentPath] = useState(pathname);
-  const shellRef = useRef<HTMLElement | null>(null);
-  const frameRef = useRef<number | null>(null);
   const isHome = currentPath === "/";
 
-  const style: ShellStyle = {
-    "--mx": "0px",
-    "--my": "0px",
-    "--tilt": "0deg",
-    ...themeStyles[theme],
-  };
+  const { background: _background, ...themeVars } = themeStyles[theme];
+  const style: ShellStyle = themeVars;
 
   useEffect(() => {
     function isExtensionRemoveChildError(message: unknown) {
@@ -139,20 +131,13 @@ export function SiteShell({
   }, []);
 
   useEffect(() => {
-    return () => {
-      if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     applyThemeToDocument(theme);
     persistTheme(theme);
   }, [theme]);
 
   useEffect(() => {
     setCurrentPath(pathname);
+    setMobileNavOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -178,61 +163,13 @@ export function SiteShell({
   }
 
   return (
-    <main
-      ref={shellRef}
-      className={styles.shell}
-      data-theme={theme}
-      style={style}
-      onMouseMove={(event) => {
-        const x = event.clientX / window.innerWidth - 0.5;
-        const y = event.clientY / window.innerHeight - 0.5;
-
-        if (frameRef.current !== null) {
-          cancelAnimationFrame(frameRef.current);
-        }
-
-        frameRef.current = requestAnimationFrame(() => {
-          const shell = shellRef.current;
-          if (!shell) {
-            frameRef.current = null;
-            return;
-          }
-
-          shell.style.setProperty("--mx", `${x * 26}px`);
-          shell.style.setProperty("--my", `${y * 26}px`);
-          shell.style.setProperty("--tilt", `${x * 10}deg`);
-          frameRef.current = null;
-        });
-      }}
-    >
-      <LineBackground />
-
+    <main className={styles.shell} data-theme={theme} style={style}>
+      <ContentProtection />
       <header className={styles.header}>
         <Link href="/" className={styles.brand} aria-label="Go to home">
           <img src="/logo.png" alt="Arpit" />
         </Link>
-      </header>
-
-      <nav
-        className={`${styles.nav} ${isHome ? styles.navHome : styles.navInterior}`}
-        aria-label="Portfolio pages"
-      >
-        <div className={styles.navPages}>
-          {links.map((link) => {
-            const isActive = currentPath === link.href;
-            return (
-              <Link
-                href={link.href}
-                key={link.href}
-                className={`${styles.navLink} ${isActive ? styles.activeNavLink : ""}`}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-        <div className={styles.navTools}>
+        <div className={styles.headerTools}>
           <a
             className={styles.resumeLink}
             href={resume.href}
@@ -250,6 +187,64 @@ export function SiteShell({
           >
             {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
           </button>
+        </div>
+      </header>
+
+      <nav
+        className={`${styles.nav} ${isHome ? styles.navHome : styles.navInterior} ${mobileNavOpen ? styles.navOpen : ""}`}
+        aria-label="Portfolio pages"
+      >
+        <button
+          className={styles.navToggle}
+          type="button"
+          aria-expanded={mobileNavOpen}
+          aria-controls="portfolio-nav-menu"
+          aria-label={
+            mobileNavOpen ? "Close navigation menu" : "Open navigation menu"
+          }
+          onClick={() => setMobileNavOpen((open) => !open)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
+
+        <div className={styles.navMenu} id="portfolio-nav-menu">
+          <div className={styles.navPages}>
+            {links.map((link) => {
+              const isActive = currentPath === link.href;
+              return (
+                <Link
+                  href={link.href}
+                  key={link.href}
+                  className={`${styles.navLink} ${isActive ? styles.activeNavLink : ""}`}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => setMobileNavOpen(false)}
+                >
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+          <div className={styles.navTools}>
+            <a
+              className={styles.resumeLink}
+              href={resume.href}
+              target="_blank"
+              aria-label="View resume"
+            >
+              <FileText size={15} />
+            </a>
+            <button
+              className={`${styles.themeButton} ${styles.themeButtonInNav}`}
+              type="button"
+              onClick={toggleTheme}
+              onPointerDown={(event) => event.stopPropagation()}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -315,31 +310,5 @@ function Footer() {
         </p>
       </div>
     </footer>
-  );
-}
-
-function LineBackground() {
-  return (
-    <div className={styles.background} aria-hidden="true">
-      <div className={`${styles.lineCluster} ${styles.clusterOne}`}>
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-      </div>
-      <div className={`${styles.lineCluster} ${styles.clusterTwo}`}>
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-      </div>
-      <div className={`${styles.lineCluster} ${styles.clusterThree}`}>
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-        <span className={styles.segment} />
-      </div>
-      <div className={styles.orbOne} />
-      <div className={styles.orbTwo} />
-    </div>
   );
 }

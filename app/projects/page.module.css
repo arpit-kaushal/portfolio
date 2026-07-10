@@ -36,63 +36,6 @@
   z-index: 1;
 }
 
-.floatingProjectIcons {
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: fixed;
-  z-index: 0;
-}
-
-.floatingProjectIcon {
-  align-items: center;
-  animation-duration: 18s;
-  animation-delay: var(--delay);
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  color: color-mix(in srgb, var(--muted) 52%, var(--accentTwo) 48%);
-  display: inline-flex;
-  filter: brightness(1.18) saturate(1.05);
-  height: var(--size);
-  justify-content: center;
-  left: var(--left);
-  opacity: 0.28;
-  position: absolute;
-  top: var(--top);
-  transform:
-    translate(calc(-50% + var(--repel-x)), calc(-50% + var(--repel-y)))
-    rotate(var(--rotate, -6deg));
-  transition:
-    opacity 220ms ease,
-    transform 260ms ease;
-  will-change: transform;
-  width: var(--size);
-}
-
-.floatingProjectIcon:nth-child(3n) {
-  opacity: 0.22;
-}
-
-.floatingProjectIcon:nth-child(4n) {
-  opacity: 0.34;
-}
-
-.floatingProjectIcon:nth-child(5n) {
-  color: color-mix(in srgb, var(--accentThree) 58%, var(--muted) 42%);
-}
-
-.floatProjectIconA {
-  animation-name: floatProjectIconA;
-}
-
-.floatProjectIconB {
-  animation-name: floatProjectIconB;
-}
-
-.floatProjectIconC {
-  animation-name: floatProjectIconC;
-}
-
 .card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -225,51 +168,6 @@
   color: var(--accent);
 }
 
-@keyframes floatProjectIconA {
-  0%,
-  100% {
-    margin-left: 0;
-    margin-top: 0;
-    --rotate: -7deg;
-  }
-
-  50% {
-    margin-left: 46px;
-    margin-top: -34px;
-    --rotate: 6deg;
-  }
-}
-
-@keyframes floatProjectIconB {
-  0%,
-  100% {
-    margin-left: 0;
-    margin-top: 0;
-    --rotate: 8deg;
-  }
-
-  50% {
-    margin-left: -40px;
-    margin-top: 42px;
-    --rotate: -5deg;
-  }
-}
-
-@keyframes floatProjectIconC {
-  0%,
-  100% {
-    margin-left: 0;
-    margin-top: 0;
-    --rotate: -3deg;
-  }
-
-  50% {
-    margin-left: 34px;
-    margin-top: 38px;
-    --rotate: 9deg;
-  }
-}
-
 @media (max-width: 1100px) {
   .page {
     padding-top: 10px;
@@ -284,10 +182,6 @@
 
   .grid {
     grid-template-columns: 1fr;
-  }
-
-  .floatingProjectIcon {
-    animation-name: none;
   }
 }
 
