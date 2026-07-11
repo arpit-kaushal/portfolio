@@ -198,6 +198,17 @@ export const showcaseItems: ReadonlyArray<ShowcaseItem> = [
       "Honored with this scholarship for consistent academic excellence, a strong commitment to learning, and the ambition to build technology that creates real-world value.",
     category: "achievement",
   },
+    {
+    id: "SAP-technology-consultant",
+    title: "SAP Technology Consultant",
+    organization: "Coursera · SAP",
+    date: "July 2026",
+    sortDate: "2026-07-10",
+    description:
+      "Achieved SAP Technology Consultant Professional Certificate, strengthening consulting, stakeholder communication, implementation, and enterprise system expertise.",
+    category: "certification",
+    link: "https://www.coursera.org/account/accomplishments/professional-cert/J6QPXF12FQ2K",
+  }
 ];
 
 export const projects: ReadonlyArray<Project> = [
